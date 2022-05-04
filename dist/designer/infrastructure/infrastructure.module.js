@@ -10,13 +10,16 @@ exports.InfrastructureModule = void 0;
 const common_1 = require("@nestjs/common");
 const database_module_1 = require("./database/database.module");
 const designer_controller_1 = require("./controller/designer.controller");
+const domain_module_1 = require("../domain/domain.module");
 let InfrastructureModule = class InfrastructureModule {
 };
 InfrastructureModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule],
+        imports: [
+            domain_module_1.DomainModule,
+            database_module_1.DatabaseModule
+        ],
         controllers: [designer_controller_1.DesignerController],
-        providers: []
     })
 ], InfrastructureModule);
 exports.InfrastructureModule = InfrastructureModule;

@@ -1,35 +1,40 @@
-import {Body, Controller, Get, Post, Patch, Logger, Param, Query} from "@nestjs/common";
+import {Body, Controller, Get, Post, Patch, Logger, Param, Query, Inject} from "@nestjs/common";
 import {CreateDesignerDTO} from "../dto/create-designer.dto";
 import {UpdateDesignerDTO} from "../dto/update-designer.dto";
+import {DesignerAdapter} from "../../domain/adapter/designer.adapter";
+import {IDesignerAdapter} from "../../domain/port/designer-adapter.interface";
 
 @Controller("designer")
 export class DesignerController {
     private readonly logger = new Logger(DesignerController.name);
 
-    constructor() {
+    constructor(
+        @Inject(DesignerAdapter) private readonly designerAdapter: IDesignerAdapter
+    ) {
     }
 
     @Post("/register")
     async createDesigner(
-        @Body() user: CreateDesignerDTO): Promise<void> {
-        console.log('priveeeeeeeeW')
+        @Body() designer: CreateDesignerDTO): Promise<any> {
+        await this.designerAdapter.create(designer)
+        return {message: "ok"}
     }
 
-    @Patch("/update-profile")
-    async updateDesignerProfile(
-        @Body() data: Partial<UpdateDesignerDTO>,
-        @Param("username") username: string): Promise<void> {
-    }
-
-    @Get("/:id")
-    async getDesignerById(
-        @Param("id") id: string): Promise<any> {
-    }
-
-    @Get("/list")
-    async getDesigners(
-        @Query("pageNumber") pageNumber: "0",
-        @Query("limit")
-            limit: "3"): Promise<any> {
-    }
+    // @Patch("/update-profile")
+    // async updateDesignerProfile(
+    //     @Body() data: Partial<UpdateDesignerDTO>,
+    //     @Param("username") username: string): Promise<void> {
+    // }
+    //
+    // @Get("/:id")
+    // async getDesignerById(
+    //     @Param("id") id: string): Promise<any> {
+    // }
+    //
+    // @Get("/list")
+    // async getDesigners(
+    //     @Query("pageNumber") pageNumber: "0",
+    //     @Query("limit")
+    //         limit: "3"): Promise<any> {
+    // }
 }

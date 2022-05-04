@@ -1,10 +1,8 @@
 import { CreateDesignerDTO } from "../dto/create-designer.dto";
-import { UpdateDesignerDTO } from "../dto/update-designer.dto";
+import { IDesignerAdapter } from "../../domain/port/designer-adapter.interface";
 export declare class DesignerController {
+    private readonly designerAdapter;
     private readonly logger;
-    constructor();
-    createDesigner(user: CreateDesignerDTO): Promise<void>;
-    updateDesignerProfile(data: Partial<UpdateDesignerDTO>, username: string): Promise<void>;
-    getDesignerById(id: string): Promise<any>;
-    getDesigners(pageNumber: "0", limit: "3"): Promise<any>;
+    constructor(designerAdapter: IDesignerAdapter);
+    createDesigner(designer: CreateDesignerDTO): Promise<any>;
 }
