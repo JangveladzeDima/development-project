@@ -5,19 +5,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.InfrastructureModule = void 0;
-const common_1 = require("@nestjs/common");
-const database_module_1 = require("./database/database.module");
-const designer_controller_1 = require("./controller/designer.controller");
-let InfrastructureModule = class InfrastructureModule {
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-InfrastructureModule = __decorate([
-    (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule],
-        controllers: [designer_controller_1.DesignerController],
-        providers: []
-    })
-], InfrastructureModule);
-exports.InfrastructureModule = InfrastructureModule;
-//# sourceMappingURL=infrastructure.module.js.map
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DesignerAdapter = void 0;
+const common_1 = require("@nestjs/common");
+let DesignerAdapter = class DesignerAdapter {
+    constructor() {
+    }
+    async create() {
+    }
+};
+DesignerAdapter = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
+], DesignerAdapter);
+exports.DesignerAdapter = DesignerAdapter;
+//# sourceMappingURL=designer.adapter.js.map

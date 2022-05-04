@@ -21,6 +21,7 @@ let DesignerController = DesignerController_1 = class DesignerController {
         this.logger = new common_1.Logger(DesignerController_1.name);
     }
     async createDesigner(user) {
+        console.log('priveeeeeeeeW');
     }
     async updateDesignerProfile(data, username) {
     }

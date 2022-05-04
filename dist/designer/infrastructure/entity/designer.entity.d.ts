@@ -3,6 +3,8 @@ export declare class DesignerEntity {
     email: string;
     firstname: string;
     lastname: string;
+    password: string;
+    salt: string;
     age: Date;
     address: string;
     phone: number;

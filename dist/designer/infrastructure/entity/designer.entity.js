@@ -38,37 +38,54 @@ __decorate([
 ], DesignerEntity.prototype, "lastname", void 0);
 __decorate([
     (0, typeorm_1.Column)({
+        type: "varchar"
+    }),
+    __metadata("design:type", String)
+], DesignerEntity.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'varchar'
+    }),
+    __metadata("design:type", String)
+], DesignerEntity.prototype, "salt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
         type: "date"
     }),
     __metadata("design:type", Date)
 ], DesignerEntity.prototype, "age", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "varchar"
+        type: "varchar",
+        default: ''
     }),
     __metadata("design:type", String)
 ], DesignerEntity.prototype, "address", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "integer"
+        type: "integer",
+        default: 0
     }),
     __metadata("design:type", Number)
 ], DesignerEntity.prototype, "phone", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "boolean"
+        type: "boolean",
+        default: true
     }),
     __metadata("design:type", Boolean)
 ], DesignerEntity.prototype, "isFree", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "integer"
+        type: "integer",
+        default: 0
     }),
     __metadata("design:type", Number)
 ], DesignerEntity.prototype, "rating", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "integer"
+        type: "integer",
+        default: -1
     }),
     __metadata("design:type", Number)
 ], DesignerEntity.prototype, "avatarID", void 0);
