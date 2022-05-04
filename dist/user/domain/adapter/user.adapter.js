@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserAdapter = void 0;
 const common_1 = require("@nestjs/common");
 const user_repository_1 = require("../../infrastructure/database/repository/user.repository");
-const available_roles_1 = require("../../infrastructure/constants/available-roles");
+const available_roles_1 = require("../../../constants/available-roles");
 let UserAdapter = class UserAdapter {
     constructor(userRepository) {
         this.userRepository = userRepository;

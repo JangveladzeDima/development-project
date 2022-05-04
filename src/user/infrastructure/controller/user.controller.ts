@@ -2,8 +2,8 @@ import {Body, Controller, Inject, Logger, Post} from "@nestjs/common";
 import {CreateUserDto} from "../dto/create-user.dto";
 import {UserAdapter} from "../../domain/adapter/user.adapter";
 import {IUserAdapter} from "../../domain/port/user-adapter.interface";
-import {Roles} from "../../application/decorators/role.decorator";
-import {RolesGuard} from "../../application/guards/role.guard";
+import {Roles} from "../../../auth/decorator/role.decorator";
+import {RolesGuard} from "../../../auth/guard/role.guard";
 import {UseGuards} from "@nestjs/common";
 
 @Controller('/user')
