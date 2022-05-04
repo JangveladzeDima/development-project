@@ -17,8 +17,8 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const create_user_dto_1 = require("../dto/create-user.dto");
 const user_adapter_1 = require("../../domain/adapter/user.adapter");
-const role_decorator_1 = require("../../application/decorators/role.decorator");
-const role_guard_1 = require("../../application/guards/role.guard");
+const role_decorator_1 = require("../../../auth/decorator/role.decorator");
+const role_guard_1 = require("../../../auth/guard/role.guard");
 const common_2 = require("@nestjs/common");
 let UserController = UserController_1 = class UserController {
     constructor(userAdapter) {

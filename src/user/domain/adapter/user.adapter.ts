@@ -3,7 +3,7 @@ import {IUserAdapter} from "../port/user-adapter.interface";
 import {CreateUserDto} from "../../infrastructure/dto/create-user.dto";
 import {UserRepository} from "../../infrastructure/database/repository/user.repository";
 import {IUserRepository} from "../../infrastructure/database/port/user-repository.interface";
-import {AvailableRoles} from "../../infrastructure/constants/available-roles";
+import {AvailableRoles} from "../../../constants/available-roles";
 
 @Injectable()
 export class UserAdapter implements IUserAdapter {

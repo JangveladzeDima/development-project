@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationModule = void 0;
 const common_1 = require("@nestjs/common");
-const role_guard_1 = require("./guards/role.guard");
+const role_guard_1 = require("../../auth/guard/role.guard");
 let ApplicationModule = class ApplicationModule {
 };
 ApplicationModule = __decorate([

@@ -6,21 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const infrastructure_module_1 = require("./infrastructure/infrastructure.module");
-const domain_module_1 = require("./domain/domain.module");
-const auth_module_1 = require("../auth/auth.module");
-let UserModule = class UserModule {
+const role_guard_1 = require("./guard/role.guard");
+const jwt_guard_1 = require("./guard/jwt.guard");
+const jwt_1 = require("@nestjs/jwt");
+const jwt_service_1 = require("./service/jwt.service");
+let AuthModule = class AuthModule {
 };
-UserModule = __decorate([
+AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            auth_module_1.AuthModule,
-            infrastructure_module_1.InfrastructureModule,
-            domain_module_1.DomainModule
-        ]
+            jwt_1.JwtModule.register({
+                secret: 'vaskania',
+                signOptions: { expiresIn: '1h' }
+            })
+        ],
+        providers: [role_guard_1.RolesGuard, jwt_guard_1.JwtAuthGuard, jwt_service_1.JwtAuthService]
     })
-], UserModule);
-exports.UserModule = UserModule;
-//# sourceMappingURL=user.module.js.map
+], AuthModule);
+exports.AuthModule = AuthModule;
+//# sourceMappingURL=auth.module.js.map
