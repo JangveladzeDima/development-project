@@ -1,18 +1,17 @@
 import {Injectable} from "@nestjs/common";
 import {JwtService} from "@nestjs/jwt";
+import {IJwtService} from "../port/jwt-service.interface";
 
 @Injectable()
-export class JwtAuthService {
+export class JwtAuthService implements IJwtService {
     constructor(
         private readonly jwtService: JwtService
     ) {
     }
 
-    async login(id: number, role: string) {
+    async login(payload) {
         return {
-            access_token: this.jwtService.sign({
-                id, role
-            }),
+            access_token: this.jwtService.sign(payload),
         }
     }
 }

@@ -12,17 +12,19 @@ const role_guard_1 = require("./guard/role.guard");
 const jwt_guard_1 = require("./guard/jwt.guard");
 const jwt_1 = require("@nestjs/jwt");
 const jwt_service_1 = require("./service/jwt.service");
+const jwt_strategy_1 = require("./strategy/jwt.strategy");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             jwt_1.JwtModule.register({
-                secret: 'vaskania',
+                secret: 'racxa',
                 signOptions: { expiresIn: '1h' }
             })
         ],
-        providers: [role_guard_1.RolesGuard, jwt_guard_1.JwtAuthGuard, jwt_service_1.JwtAuthService]
+        providers: [role_guard_1.RolesGuard, jwt_guard_1.JwtAuthGuard, jwt_service_1.JwtAuthService, jwt_strategy_1.JwtStrategy],
+        exports: [jwt_service_1.JwtAuthService]
     })
 ], AuthModule);
 exports.AuthModule = AuthModule;

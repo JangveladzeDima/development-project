@@ -13,7 +13,7 @@ export class UserRepository implements IUserRepository {
     }
 
     async create(userParams) {
-        await this.userRepository.save(userParams)
+        return this.userRepository.save(userParams)
     }
 
     async getUser(params) {

@@ -1,17 +1,19 @@
 import {Module} from "@nestjs/common";
 import {RolesGuard} from "./guard/role.guard";
 import {JwtAuthGuard} from "./guard/jwt.guard";
-import {JwtModule, JwtService} from "@nestjs/jwt";
-import {JwtAuthService} from "./service/jwt.service";
+import {JwtModule} from "@nestjs/jwt";
+import {JwtAuthService} from "./service/service/jwt.service";
+import {JwtStrategy} from "./strategy/jwt.strategy";
 
 @Module({
     imports: [
         JwtModule.register({
-            secret: 'vaskania',
+            secret: 'racxa',
             signOptions: { expiresIn: '1h' }
         })
     ],
-    providers: [RolesGuard, JwtAuthGuard, JwtAuthService]
+    providers: [RolesGuard, JwtAuthGuard, JwtAuthService, JwtStrategy],
+    exports:[JwtAuthService]
 })
 export class AuthModule {
 }

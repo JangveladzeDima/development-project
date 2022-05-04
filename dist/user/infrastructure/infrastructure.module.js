@@ -12,6 +12,7 @@ const database_module_1 = require("./database/database.module");
 const user_controller_1 = require("./controller/user.controller");
 const domain_module_1 = require("../domain/domain.module");
 const application_module_1 = require("../application/application.module");
+const auth_module_1 = require("../../auth/auth.module");
 let InfrastructureModule = class InfrastructureModule {
 };
 InfrastructureModule = __decorate([
@@ -19,7 +20,8 @@ InfrastructureModule = __decorate([
         imports: [
             database_module_1.DatabaseModule,
             domain_module_1.DomainModule,
-            application_module_1.ApplicationModule
+            application_module_1.ApplicationModule,
+            auth_module_1.AuthModule
         ],
         controllers: [user_controller_1.UserController]
     })

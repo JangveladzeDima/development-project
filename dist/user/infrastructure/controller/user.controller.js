@@ -20,15 +20,32 @@ const user_adapter_1 = require("../../domain/adapter/user.adapter");
 const role_decorator_1 = require("../../../auth/decorator/role.decorator");
 const role_guard_1 = require("../../../auth/guard/role.guard");
 const common_2 = require("@nestjs/common");
+const jwt_guard_1 = require("../../../auth/guard/jwt.guard");
+const jwt_service_1 = require("../../../auth/service/jwt.service");
 let UserController = UserController_1 = class UserController {
-    constructor(userAdapter) {
+    constructor(userAdapter, jwtService) {
         this.userAdapter = userAdapter;
+        this.jwtService = jwtService;
         this.logger = new common_1.Logger(UserController_1.name);
     }
     async create(createUserParams) {
         try {
-            await this.userAdapter.create(createUserParams);
+            const user = await this.userAdapter.create(createUserParams);
             return {
+                user,
+                message: 'ok!'
+            };
+        }
+        catch (err) {
+            this.logger.error(err.message);
+            throw err;
+        }
+    }
+    async getUser(filter) {
+        try {
+            const user = await this.userAdapter.getUser(filter);
+            return {
+                user,
                 message: 'ok!'
             };
         }
@@ -41,16 +58,23 @@ let UserController = UserController_1 = class UserController {
 __decorate([
     (0, common_1.Post)('/create'),
     (0, role_decorator_1.Roles)('admin', 'user'),
-    (0, common_2.UseGuards)(role_guard_1.RolesGuard),
+    (0, common_2.UseGuards)(jwt_guard_1.JwtAuthGuard, role_guard_1.RolesGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)('/'),
+    __param(0, (0, common_1.Body)('filter')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUser", null);
 UserController = UserController_1 = __decorate([
     (0, common_1.Controller)('/user'),
     __param(0, (0, common_1.Inject)(user_adapter_1.UserAdapter)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, jwt_service_1.JwtAuthService])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

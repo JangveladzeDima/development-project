@@ -5,7 +5,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: ['log', 'error']
     });
-    await app.listen(7777);
+    await app.listen(1234);
 }
 
 bootstrap().catch((err) => console.log(err));
