@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { IUserAdapter } from "../../domain/port/user-adapter.interface";
-import { JwtAuthService } from "../../../auth/service/jwt.service";
+import { JwtAuthService } from "../../../auth/service/service/jwt.service";
 export declare class UserController {
     private readonly userAdapter;
     private readonly jwtService;

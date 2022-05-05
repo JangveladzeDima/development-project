@@ -1,15 +1,15 @@
 import {Module} from "@nestjs/common";
 import {UserAdapter} from "./adapter/user.adapter";
-import {DatabaseModule} from "../infrastructure/database/database.module";
+import {UserDatabaseModule} from "../infrastructure/database/user-database.module";
 import {AuthModule} from "../../auth/auth.module";
 
 @Module({
     imports: [
         AuthModule,
-        DatabaseModule
+        UserDatabaseModule
     ],
     providers: [UserAdapter],
     exports: [UserAdapter]
 })
-export class DomainModule {
+export class UserDomainModule {
 }

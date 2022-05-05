@@ -4,6 +4,7 @@ import {JwtAuthGuard} from "./guard/jwt.guard";
 import {JwtModule} from "@nestjs/jwt";
 import {JwtAuthService} from "./service/service/jwt.service";
 import {JwtStrategy} from "./strategy/jwt.strategy";
+import {CryptoHashService} from "./service/service/crypto-hash.service";
 
 @Module({
     imports: [
@@ -12,8 +13,8 @@ import {JwtStrategy} from "./strategy/jwt.strategy";
             signOptions: { expiresIn: '1h' }
         })
     ],
-    providers: [RolesGuard, JwtAuthGuard, JwtAuthService, JwtStrategy],
-    exports:[JwtAuthService]
+    providers: [RolesGuard, JwtAuthGuard, JwtAuthService, JwtStrategy, CryptoHashService],
+    exports: [JwtAuthService, CryptoHashService]
 })
 export class AuthModule {
 }

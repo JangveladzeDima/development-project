@@ -16,8 +16,10 @@ exports.UserAdapter = void 0;
 const common_1 = require("@nestjs/common");
 const user_repository_1 = require("../../infrastructure/database/repository/user.repository");
 const available_roles_1 = require("../../../constants/available-roles");
+const crypto_hash_service_1 = require("../../../auth/service/service/crypto-hash.service");
 let UserAdapter = class UserAdapter {
-    constructor(userRepository) {
+    constructor(cryptoHashService, userRepository) {
+        this.cryptoHashService = cryptoHashService;
         this.userRepository = userRepository;
     }
     async create(createUserParams) {
@@ -46,8 +48,9 @@ let UserAdapter = class UserAdapter {
 };
 UserAdapter = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)(user_repository_1.UserRepository)),
-    __metadata("design:paramtypes", [Object])
+    __param(0, (0, common_1.Inject)(crypto_hash_service_1.CryptoHashService)),
+    __param(1, (0, common_1.Inject)(user_repository_1.UserRepository)),
+    __metadata("design:paramtypes", [Object, Object])
 ], UserAdapter);
 exports.UserAdapter = UserAdapter;
 //# sourceMappingURL=user.adapter.js.map

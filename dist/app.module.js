@@ -12,6 +12,7 @@ const user_module_1 = require("./user/user.module");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const designer_module_1 = require("./designer/designer.module");
+const company_module_1 = require("./company/company.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,7 +30,8 @@ AppModule = __decorate([
                 synchronize: true
             }),
             user_module_1.UserModule,
-            designer_module_1.DesignerModule
+            designer_module_1.DesignerModule,
+            company_module_1.CompanyModule
         ],
         controllers: [],
         providers: [],
