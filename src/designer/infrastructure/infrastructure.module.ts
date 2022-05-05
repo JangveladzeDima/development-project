@@ -1,10 +1,14 @@
 import {Module} from "@nestjs/common";
-import {DatabaseModule} from "./database/database.module";
+import {DesignerDatabaseModule} from "./database/designer-database.module";
+import {DesignerController} from "./controller/designer.controller";
+import {DesignerDomainModule} from "../domain/designer-domain.module";
 
 @Module({
-    imports: [DatabaseModule],
-    controllers: [],
-    providers: []
+    imports: [
+        DesignerDomainModule,
+        DesignerDatabaseModule
+    ],
+    controllers: [DesignerController],
 
 })
 export class InfrastructureModule {

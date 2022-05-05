@@ -1,12 +1,10 @@
 import {Module} from "@nestjs/common";
 import {UserAdapter} from "./adapter/user.adapter";
-import {UserDatabaseModule} from "../infrastructure/database/user-database.module";
-import {AuthModule} from "../../auth/auth.module";
+import {DatabaseModule} from "../infrastructure/database/database.module";
 
 @Module({
     imports: [
-        AuthModule,
-        UserDatabaseModule
+        DatabaseModule
     ],
     providers: [UserAdapter],
     exports: [UserAdapter]

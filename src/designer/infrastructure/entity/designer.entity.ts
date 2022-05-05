@@ -22,33 +22,49 @@ export class DesignerEntity {
     lastname: string;
 
     @Column({
-        type: "date"
+        type: "varchar"
     })
-    age: Date;
+    password: string;
 
     @Column({
-        type: "varchar"
+        type: 'varchar',
+        default: ''
+    })
+    salt: string
+
+    @Column({
+        type: "date"
+    })
+    birthday: Date;
+
+    @Column({
+        type: "varchar",
+        default: ''
     })
     address: string;
 
     @Column({
-        type: "integer"
+        type: "integer",
+        default: 0
     })
     phone: number;
 
     @Column({
-        type: "boolean"
+        type: "boolean",
+        default: true
     })
     isFree: boolean;
 
     @Column({
-        type: "integer"
+        type: "integer",
+        default: 0
     })
     rating: number;
 
 
     @Column({
-        type: "integer"
+        type: "integer",
+        default: -1
     })
     avatarID: number;
 
