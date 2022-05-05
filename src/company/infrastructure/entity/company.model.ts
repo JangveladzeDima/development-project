@@ -1,4 +1,5 @@
 export interface ICompany {
+    ID: number
     name: string
     address: string
     identificationCode: string

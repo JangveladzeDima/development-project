@@ -1,1 +1,1 @@
-export const AvailableRoles = ['user', 'developmentCompany', 'designer', 'worker', 'admin', 'moderator']
+export const AvailableRoles = ['user', 'company', 'designer', 'worker', 'admin', 'moderator']

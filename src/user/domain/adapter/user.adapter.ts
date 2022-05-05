@@ -20,13 +20,21 @@ export class UserAdapter implements IUserAdapter {
         if (!AvailableRoles.includes(createUserParams.role)) {
             throw new HttpException('role dont correct', HttpStatus.BAD_REQUEST)
         }
-        const user = await this.userRepository.getUser({
+        const userByID = await this.userRepository.getUser({
             filter: {
                 parentID: createUserParams.parentID
             }
         })
-        if (user !== null && user.role === createUserParams.role) {
-            throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
+        if (userByID !== null && userByID.role === createUserParams.role) {
+            throw new BadRequestException('user already exists')
+        }
+        const userByEmail = await this.userRepository.getUser({
+            filter: {
+                email: createUserParams.email
+            }
+        })
+        if (userByEmail !== null && userByEmail.email === createUserParams.email) {
+            throw new BadRequestException('email already exists')
         }
         return this.userRepository.create(createUserParams)
     }
