@@ -22,9 +22,15 @@ let DesignerController = DesignerController_1 = class DesignerController {
         this.designerAdapter = designerAdapter;
         this.logger = new common_1.Logger(DesignerController_1.name);
     }
-    async createDesigner(designer) {
-        await this.designerAdapter.create(designer);
-        return { message: "ok" };
+    async createDesigner(createDesignerParams) {
+        try {
+            await this.designerAdapter.create(createDesignerParams);
+            return { message: "ok" };
+        }
+        catch (err) {
+            this.logger.error(err.message);
+            throw err;
+        }
     }
 };
 __decorate([

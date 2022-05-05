@@ -4,6 +4,7 @@ import {CreateUserDto} from "../../infrastructure/dto/create-user.dto";
 import {UserRepository} from "../../infrastructure/database/repository/user.repository";
 import {IUserRepository} from "../../infrastructure/database/port/user-repository.interface";
 import {AvailableRoles} from "../../../constants/available-roles";
+import {IUser} from "../../infrastructure/entity/user.interface";
 
 @Injectable()
 export class UserAdapter implements IUserAdapter {
@@ -12,7 +13,7 @@ export class UserAdapter implements IUserAdapter {
     ) {
     }
 
-    async create(createUserParams: CreateUserDto): Promise<void> {
+    async create(createUserParams: CreateUserDto): Promise<IUser> {
         if (!AvailableRoles.includes(createUserParams.role)) {
             throw new HttpException('role dont correct', HttpStatus.BAD_REQUEST)
         }
@@ -21,9 +22,9 @@ export class UserAdapter implements IUserAdapter {
                 parentID: createUserParams.parentID
             }
         })
-        if (user!==null && user.role === createUserParams.role) {
+        if (user !== null && user.role === createUserParams.role) {
             throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
         }
-        await this.userRepository.create(createUserParams)
+        return this.userRepository.create(createUserParams)
     }
 }

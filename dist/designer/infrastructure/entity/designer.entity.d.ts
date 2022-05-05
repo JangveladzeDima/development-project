@@ -5,7 +5,7 @@ export declare class DesignerEntity {
     lastname: string;
     password: string;
     salt: string;
-    age: Date;
+    birthday: Date;
     address: string;
     phone: number;
     isFree: boolean;

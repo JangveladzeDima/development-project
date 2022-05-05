@@ -32,7 +32,7 @@ let UserAdapter = class UserAdapter {
         if (user !== null && user.role === createUserParams.role) {
             throw new common_1.HttpException('user already exists', common_1.HttpStatus.BAD_REQUEST);
         }
-        await this.userRepository.create(createUserParams);
+        return this.userRepository.create(createUserParams);
     }
 };
 UserAdapter = __decorate([

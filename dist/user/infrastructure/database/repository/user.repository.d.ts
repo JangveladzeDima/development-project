@@ -4,6 +4,6 @@ import { UserEntity } from "../../entity/user.entity";
 export declare class UserRepository implements IUserRepository {
     private readonly userRepository;
     constructor(userRepository: Repository<UserEntity>);
-    create(userParams: any): Promise<void>;
+    create(userParams: any): Promise<any>;
     getUser(params: any): Promise<UserEntity>;
 }

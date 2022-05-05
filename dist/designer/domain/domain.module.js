@@ -9,10 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DomainModule = void 0;
 const common_1 = require("@nestjs/common");
 const designer_adapter_1 = require("./adapter/designer.adapter");
+const database_module_1 = require("../infrastructure/database/database.module");
+const user_domain_module_1 = require("../../user/domain/user-domain.module");
 let DomainModule = class DomainModule {
 };
 DomainModule = __decorate([
     (0, common_1.Module)({
+        imports: [database_module_1.DatabaseModule, user_domain_module_1.UserDomainModule],
         providers: [designer_adapter_1.DesignerAdapter],
         exports: [designer_adapter_1.DesignerAdapter]
     })

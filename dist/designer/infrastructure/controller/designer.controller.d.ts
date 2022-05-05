@@ -4,5 +4,5 @@ export declare class DesignerController {
     private readonly designerAdapter;
     private readonly logger;
     constructor(designerAdapter: IDesignerAdapter);
-    createDesigner(designer: CreateDesignerDTO): Promise<any>;
+    createDesigner(createDesignerParams: CreateDesignerDTO): Promise<any>;
 }

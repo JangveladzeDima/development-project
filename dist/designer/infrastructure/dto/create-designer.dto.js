@@ -42,8 +42,8 @@ __decorate([
 ], CreateDesignerDTO.prototype, "lastname", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsISO8601)(),
     __metadata("design:type", Date)
-], CreateDesignerDTO.prototype, "age", void 0);
+], CreateDesignerDTO.prototype, "birthday", void 0);
 exports.CreateDesignerDTO = CreateDesignerDTO;
 //# sourceMappingURL=create-designer.dto.js.map

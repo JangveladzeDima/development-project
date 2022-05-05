@@ -42,8 +42,8 @@ __decorate([
 ], UpdateDesignerDTO.prototype, "lastname", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
-], UpdateDesignerDTO.prototype, "age", void 0);
+    (0, class_validator_1.IsISO8601)(),
+    __metadata("design:type", Date)
+], UpdateDesignerDTO.prototype, "birthday", void 0);
 exports.UpdateDesignerDTO = UpdateDesignerDTO;
 //# sourceMappingURL=update-designer.dto.js.map

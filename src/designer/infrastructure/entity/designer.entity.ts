@@ -27,14 +27,15 @@ export class DesignerEntity {
     password: string;
 
     @Column({
-        type: 'varchar'
+        type: 'varchar',
+        default: ''
     })
     salt: string
 
     @Column({
         type: "date"
     })
-    age: Date;
+    birthday: Date;
 
     @Column({
         type: "varchar",

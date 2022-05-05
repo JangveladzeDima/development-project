@@ -3,5 +3,5 @@ export declare class CreateDesignerDTO {
     readonly password: string;
     readonly firstname: string;
     readonly lastname: string;
-    readonly age: Date;
+    readonly birthday: Date;
 }

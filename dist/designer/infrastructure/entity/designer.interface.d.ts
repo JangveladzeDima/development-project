@@ -5,7 +5,7 @@ export interface IDesigner {
     lastname: string;
     password: string;
     salt: string;
-    age: Date;
+    birthday: Date;
     address: string;
     phone: number;
     isFree: boolean;

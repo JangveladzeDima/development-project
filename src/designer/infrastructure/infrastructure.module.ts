@@ -1,12 +1,12 @@
 import {Module} from "@nestjs/common";
-import {DatabaseModule} from "./database/database.module";
+import {DesignerDatabaseModule} from "./database/designer-database.module";
 import {DesignerController} from "./controller/designer.controller";
-import {DomainModule} from "../domain/domain.module";
+import {DesignerDomainModule} from "../domain/designer-domain.module";
 
 @Module({
     imports: [
-        DomainModule,
-        DatabaseModule
+        DesignerDomainModule,
+        DesignerDatabaseModule
     ],
     controllers: [DesignerController],
 

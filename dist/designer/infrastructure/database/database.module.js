@@ -10,11 +10,14 @@ exports.DatabaseModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const designer_entity_1 = require("../entity/designer.entity");
+const designer_repository_1 = require("./repository/designer.repository");
 let DatabaseModule = class DatabaseModule {
 };
 DatabaseModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([designer_entity_1.DesignerEntity])]
+        imports: [typeorm_1.TypeOrmModule.forFeature([designer_entity_1.DesignerEntity])],
+        providers: [designer_repository_1.DesignerRepository],
+        exports: [designer_repository_1.DesignerRepository]
     })
 ], DatabaseModule);
 exports.DatabaseModule = DatabaseModule;

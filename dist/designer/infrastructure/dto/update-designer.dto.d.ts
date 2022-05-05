@@ -3,5 +3,5 @@ export declare class UpdateDesignerDTO {
     readonly password: string;
     readonly firstname: string;
     readonly lastname: string;
-    readonly age: number;
+    readonly birthday: Date;
 }

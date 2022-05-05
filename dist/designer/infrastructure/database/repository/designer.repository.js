@@ -22,7 +22,10 @@ let DesignerRepository = class DesignerRepository {
         this.designerRepository = designerRepository;
     }
     async create(designerParams) {
-        this.designerRepository.create(designerParams);
+        return this.designerRepository.save(designerParams);
+    }
+    async updateDesignerProfile(updateData) {
+        await this.designerRepository.update(updateData.filter, updateData.updateParams);
     }
 };
 DesignerRepository = __decorate([

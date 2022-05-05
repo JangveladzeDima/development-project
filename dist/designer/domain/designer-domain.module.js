@@ -6,21 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InfrastructureModule = void 0;
+exports.DesignerDomainModule = void 0;
 const common_1 = require("@nestjs/common");
-const designer_database_module_1 = require("./database/designer-database.module");
-const designer_controller_1 = require("./controller/designer.controller");
-const designer_domain_module_1 = require("../domain/designer-domain.module");
-let InfrastructureModule = class InfrastructureModule {
+const designer_adapter_1 = require("./adapter/designer.adapter");
+const designer_database_module_1 = require("../infrastructure/database/designer-database.module");
+const user_domain_module_1 = require("../../user/domain/user-domain.module");
+let DesignerDomainModule = class DesignerDomainModule {
 };
-InfrastructureModule = __decorate([
+DesignerDomainModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            designer_domain_module_1.DesignerDomainModule,
-            designer_database_module_1.DesignerDatabaseModule
-        ],
-        controllers: [designer_controller_1.DesignerController],
+        imports: [designer_database_module_1.DesignerDatabaseModule, user_domain_module_1.UserDomainModule],
+        providers: [designer_adapter_1.DesignerAdapter],
+        exports: [designer_adapter_1.DesignerAdapter]
     })
-], InfrastructureModule);
-exports.InfrastructureModule = InfrastructureModule;
-//# sourceMappingURL=infrastructure.module.js.map
+], DesignerDomainModule);
+exports.DesignerDomainModule = DesignerDomainModule;
+//# sourceMappingURL=designer-domain.module.js.map

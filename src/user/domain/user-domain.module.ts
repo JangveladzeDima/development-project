@@ -9,5 +9,5 @@ import {DatabaseModule} from "../infrastructure/database/database.module";
     providers: [UserAdapter],
     exports: [UserAdapter]
 })
-export class DomainModule {
+export class UserDomainModule {
 }

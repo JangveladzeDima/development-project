@@ -44,7 +44,8 @@ __decorate([
 ], DesignerEntity.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: 'varchar'
+        type: 'varchar',
+        default: ''
     }),
     __metadata("design:type", String)
 ], DesignerEntity.prototype, "salt", void 0);
@@ -53,7 +54,7 @@ __decorate([
         type: "date"
     }),
     __metadata("design:type", Date)
-], DesignerEntity.prototype, "age", void 0);
+], DesignerEntity.prototype, "birthday", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: "varchar",

@@ -15,9 +15,15 @@ export class DesignerController {
 
     @Post("/register")
     async createDesigner(
-        @Body() designer: CreateDesignerDTO): Promise<any> {
-        await this.designerAdapter.create(designer)
-        return {message: "ok"}
+        @Body() createDesignerParams: CreateDesignerDTO): Promise<any> {
+        try {
+            await this.designerAdapter.create(createDesignerParams)
+            return {message: "ok"}
+        } catch (err) {
+            this.logger.error(err.message)
+            throw err
+        }
+
     }
 
     // @Patch("/update-profile")
