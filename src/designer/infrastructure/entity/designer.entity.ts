@@ -7,7 +7,8 @@ export class DesignerEntity {
     ID: number;
 
     @Column({
-        type: "varchar"
+        type: "varchar",
+        unique: true
     })
     email: string;
 

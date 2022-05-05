@@ -1,4 +1,16 @@
-import {Body, Controller, Get, Post, Patch, Logger, Param, Query, Inject} from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    Patch,
+    Logger,
+    Param,
+    Query,
+    Inject,
+    HttpException,
+    HttpStatus
+} from "@nestjs/common";
 import {CreateDesignerDTO} from "../dto/create-designer.dto";
 import {UpdateDesignerDTO} from "../dto/update-designer.dto";
 import {DesignerAdapter} from "../../domain/adapter/designer.adapter";
@@ -20,6 +32,10 @@ export class DesignerController {
             await this.designerAdapter.create(createDesignerParams)
             return {message: "ok"}
         } catch (err) {
+            if (err.constraint === 'UQ_e59bac77b732fe8755c64a2217e') {
+                this.logger.error("User Already Exists");
+                throw new HttpException("User Already Exists", HttpStatus.BAD_REQUEST);
+            }
             this.logger.error(err.message)
             throw err
         }

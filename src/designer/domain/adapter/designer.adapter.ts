@@ -5,18 +5,22 @@ import {IDesignerRepository} from "../../infrastructure/database/port/designer-r
 import {CreateDesignerDTO} from "../../infrastructure/dto/create-designer.dto";
 import {UserAdapter} from "../../../user/domain/adapter/user.adapter";
 import {IUserAdapter} from "../../../user/domain/port/user-adapter.interface";
+import {CryptoHashService} from "../../../auth/service/service/crypto-hash.service";
+import {ICryptoHashService} from "../../../auth/service/port/crypto-hash-service.interface";
 
 @Injectable()
 export class DesignerAdapter implements IDesignerAdapter {
     constructor(
+        @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
         @Inject(DesignerRepository) private readonly designerRepository: IDesignerRepository,
         @Inject(UserAdapter) private readonly userService: IUserAdapter
     ) {
     }
 
     async create(createDesignerParams: CreateDesignerDTO): Promise<any> {
-        const { email, ID } = await this.designerRepository.create(createDesignerParams)
-        const user = await this.userService.create({ parentID: ID, role: 'designer', email })
+        const {hash, salt} = await this.cryptoHashService.generateHashAndSalt(createDesignerParams.password)
+        const {email, ID} = await this.designerRepository.create({...createDesignerParams, password: hash, salt})
+        const user = await this.userService.create({parentID: ID, role: 'designer', email})
         await this.designerRepository.updateDesignerProfile({
             filter: {
                 ID

@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { InfrastructureModule } from "./infrastructure/infrastructure.module";
+import {Module} from "@nestjs/common";
+import {InfrastructureModule} from "./infrastructure/infrastructure.module";
 
 
 @Module({
-  imports: [InfrastructureModule]
+    imports: [InfrastructureModule,]
 })
 export class DesignerModule {
 }
