@@ -25,7 +25,7 @@ let DesignerController = DesignerController_1 = class DesignerController {
     async createDesigner(createDesignerParams) {
         try {
             await this.designerAdapter.create(createDesignerParams);
-            return { message: "ok" };
+            return { message: "created" };
         }
         catch (err) {
             this.logger.error(err.message);

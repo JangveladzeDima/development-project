@@ -18,7 +18,7 @@ export class DesignerController {
         @Body() createDesignerParams: CreateDesignerDTO): Promise<any> {
         try {
             await this.designerAdapter.create(createDesignerParams)
-            return {message: "ok"}
+            return {message: "created"}
         } catch (err) {
             this.logger.error(err.message)
             throw err
