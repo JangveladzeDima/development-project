@@ -5,4 +5,6 @@ export class CreateUserDto {
     parentID: number
     @IsNotEmpty()
     role: string
+    @IsNotEmpty()
+    email: string
 }

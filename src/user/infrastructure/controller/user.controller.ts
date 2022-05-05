@@ -37,10 +37,10 @@ export class UserController {
     @Get('/')
     async getUser(@Body('filter') filter: {}) {
         try {
-            const user=await this.userAdapter.getUser(filter)
+            const user = await this.userAdapter.getUser(filter)
             return {
                 user,
-                message:'ok!'
+                message: 'ok!'
             }
         } catch (err) {
             this.logger.error(err.message)

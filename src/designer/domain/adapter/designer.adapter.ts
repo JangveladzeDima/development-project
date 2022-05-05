@@ -15,8 +15,8 @@ export class DesignerAdapter implements IDesignerAdapter {
     }
 
     async create(createDesignerParams: CreateDesignerDTO): Promise<any> {
-        const {ID} = await this.designerRepository.create(createDesignerParams)
-        const user = await this.userService.create({parentID: ID, role: 'designer'})
+        const { email, ID } = await this.designerRepository.create(createDesignerParams)
+        const user = await this.userService.create({ parentID: ID, role: 'designer', email })
         await this.designerRepository.updateDesignerProfile({
             filter: {
                 ID

@@ -12,4 +12,8 @@ export class UserEntity {
         type: 'varchar'
     })
     role: string
+    @Column({
+        type: 'varchar'
+    })
+    email: string
 }

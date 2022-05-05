@@ -1,5 +1,6 @@
 export interface IUser {
-    ID?: number,
+    ID?: number
     role: string
-    parentID: number,
+    parentID: number
+    email:string
 }
