@@ -29,13 +29,12 @@ export class DesignerController {
     async createDesigner(
         @Body() createDesignerParams: CreateDesignerDTO): Promise<any> {
         try {
-            await this.designerAdapter.create(createDesignerParams)
-            return {message: "created"}
-        } catch (err) {
-            if (err.constraint === 'UQ_e59bac77b732fe8755c64a2217e') {
-                this.logger.error("User Already Exists");
-                throw new HttpException("User Already Exists", HttpStatus.BAD_REQUEST);
+            const designer = await this.designerAdapter.create(createDesignerParams)
+            return {
+                designer,
+                message: "created"
             }
+        } catch (err) {
             this.logger.error(err.message)
             throw err
         }
