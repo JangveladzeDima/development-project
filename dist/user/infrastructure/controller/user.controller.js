@@ -21,7 +21,7 @@ const role_decorator_1 = require("../../../auth/decorator/role.decorator");
 const role_guard_1 = require("../../../auth/guard/role.guard");
 const common_2 = require("@nestjs/common");
 const jwt_guard_1 = require("../../../auth/guard/jwt.guard");
-const jwt_service_1 = require("../../../auth/service/jwt.service");
+const jwt_service_1 = require("../../../auth/service/service/jwt.service");
 let UserController = UserController_1 = class UserController {
     constructor(userAdapter, jwtService) {
         this.userAdapter = userAdapter;

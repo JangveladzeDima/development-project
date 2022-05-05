@@ -9,5 +9,5 @@ import {Repository} from "typeorm";
     providers: [UserRepository],
     exports: [UserRepository]
 })
-export class DatabaseModule {
+export class UserDatabaseModule {
 }

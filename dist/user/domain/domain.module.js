@@ -10,11 +10,13 @@ exports.DomainModule = void 0;
 const common_1 = require("@nestjs/common");
 const user_adapter_1 = require("./adapter/user.adapter");
 const database_module_1 = require("../infrastructure/database/database.module");
+const auth_module_1 = require("../../auth/auth.module");
 let DomainModule = class DomainModule {
 };
 DomainModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            auth_module_1.AuthModule,
             database_module_1.DatabaseModule
         ],
         providers: [user_adapter_1.UserAdapter],

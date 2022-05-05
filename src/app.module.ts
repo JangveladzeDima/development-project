@@ -3,10 +3,11 @@ import {UserModule} from "./user/user.module";
 import {ConfigModule} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {DesignerModule} from "./designer/designer.module";
+import {CompanyModule} from "./company/company.module";
 
 @Module({
     imports: [
-        ConfigModule.forRoot({isGlobal: true}),
+        ConfigModule.forRoot({ isGlobal: true }),
         TypeOrmModule.forRoot({
             type: 'postgres',
             host: process.env.POSTGRES_HOST,
@@ -18,7 +19,8 @@ import {DesignerModule} from "./designer/designer.module";
             synchronize: true
         }),
         UserModule,
-        DesignerModule
+        DesignerModule,
+        CompanyModule
     ],
     controllers: [],
     providers: [],
