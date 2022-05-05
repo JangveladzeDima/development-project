@@ -24,6 +24,7 @@ import {CompanyModule} from "./company/company.module";
     ],
     controllers: [],
     providers: [],
+    exports:[]
 })
 export class AppModule {
 }
