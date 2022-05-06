@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: 'development'
+  description: 'development'
+  version: '1.0.0'
+servers:
+  - url: 'http://localhost:1234'
+
+paths:
+  /company/register:
+    post:
+      description: Register New Company
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/companyRegistrationSchema'
+
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  company:
+                    $ref: '#/components/schemas/companySchema'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestSchema'
+  /designer/register:
+    post:
+      description: Register New Designer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/designerRegistrationSchema'
+
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  designer:
+                    $ref: '#/components/schemas/designerSchema'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestSchema'
+
+
+components:
+  schemas:
+    badRequestSchema:
+      type: object
+      properties:
+        statusCode:
+          type: number
+        message:
+          type: string
+        error:
+          type: string
+    companyRegistrationSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        identificationCode:
+          type: string
+        phoneNumber:
+          type: string
+        dataOfEstablishment:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    companySchema:
+      allOf:
+        - $ref: '#/components/schemas/companyRegistrationSchema'
+      type: object
+      properties:
+        ID:
+          type: number
+        salt:
+          type: string
+        rating:
+          type: number
+        user:
+          type: number
+    designerRegistrationSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        birthday:
+          type: string
+        password:
+          type: string
+    designerSchema:
+      allOf:
+        - $ref: '#/components/schemas/designerRegistrationSchema'
+      type: object
+      properties:
+        ID:
+          type: number
+        salt:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+        isFree:
+          type: boolean
+        rating:
+          type: number
+        avatarID:
+          type: number
+        user:
+          type: number
+
+
+
+
+
+
+
+
+
+
+
+
