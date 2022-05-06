@@ -26,13 +26,21 @@ let UserAdapter = class UserAdapter {
         if (!available_roles_1.AvailableRoles.includes(createUserParams.role)) {
             throw new common_1.HttpException('role dont correct', common_1.HttpStatus.BAD_REQUEST);
         }
-        const user = await this.userRepository.getUser({
+        const userByID = await this.userRepository.getUser({
             filter: {
                 parentID: createUserParams.parentID
             }
         });
-        if (user !== null && user.role === createUserParams.role) {
-            throw new common_1.HttpException('user already exists', common_1.HttpStatus.BAD_REQUEST);
+        if (userByID !== null && userByID.role === createUserParams.role) {
+            throw new common_1.BadRequestException('user already exists');
+        }
+        const userByEmail = await this.userRepository.getUser({
+            filter: {
+                email: createUserParams.email
+            }
+        });
+        if (userByEmail !== null && userByEmail.email === createUserParams.email) {
+            throw new common_1.BadRequestException('email already exists');
         }
         return this.userRepository.create(createUserParams);
     }

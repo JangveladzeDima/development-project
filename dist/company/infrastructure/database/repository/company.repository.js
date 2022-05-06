@@ -24,6 +24,12 @@ let CompanyRepository = class CompanyRepository {
     async create(companyParams) {
         return this.companyRepository.save(companyParams);
     }
+    async updateCompany(params) {
+        await this.companyRepository.update(params.filter, params.updatedParams);
+    }
+    async getCompany(params) {
+        return this.companyRepository.findOneBy(params.filter);
+    }
 };
 CompanyRepository = __decorate([
     (0, common_1.Injectable)(),

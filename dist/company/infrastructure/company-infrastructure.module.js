@@ -9,11 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompanyInfrastructureModule = void 0;
 const common_1 = require("@nestjs/common");
 const company_database_module_1 = require("./database/company-database.module");
+const company_controller_1 = require("./controller/company.controller");
+const company_domain_module_1 = require("../domain/company-domain.module");
 let CompanyInfrastructureModule = class CompanyInfrastructureModule {
 };
 CompanyInfrastructureModule = __decorate([
     (0, common_1.Module)({
-        imports: [company_database_module_1.CompanyDatabaseModule]
+        imports: [
+            company_database_module_1.CompanyDatabaseModule,
+            company_domain_module_1.CompanyDomainModule
+        ],
+        controllers: [company_controller_1.CompanyController]
     })
 ], CompanyInfrastructureModule);
 exports.CompanyInfrastructureModule = CompanyInfrastructureModule;

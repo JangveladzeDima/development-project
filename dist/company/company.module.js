@@ -9,11 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CompanyModule = void 0;
 const common_1 = require("@nestjs/common");
 const company_infrastructure_module_1 = require("./infrastructure/company-infrastructure.module");
+const company_domain_module_1 = require("./domain/company-domain.module");
 let CompanyModule = class CompanyModule {
 };
 CompanyModule = __decorate([
     (0, common_1.Module)({
-        imports: [company_infrastructure_module_1.CompanyInfrastructureModule]
+        imports: [
+            company_infrastructure_module_1.CompanyInfrastructureModule,
+            company_domain_module_1.CompanyDomainModule
+        ]
     })
 ], CompanyModule);
 exports.CompanyModule = CompanyModule;

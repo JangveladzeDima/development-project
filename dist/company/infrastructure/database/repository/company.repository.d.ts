@@ -6,4 +6,11 @@ export declare class CompanyRepository implements ICompanyRepository {
     private readonly companyRepository;
     constructor(companyRepository: Repository<CompanyEntity>);
     create(companyParams: Partial<ICompany>): Promise<ICompany>;
+    updateCompany(params: {
+        filter: {};
+        updatedParams: {};
+    }): Promise<void>;
+    getCompany(params: {
+        filter: {};
+    }): Promise<ICompany>;
 }
