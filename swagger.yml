@@ -4,7 +4,7 @@ info:
   description: 'development'
   version: '1.0.0'
 servers:
-  - url:  'http://localhost:1234'
+  - url: 'http://localhost:1234'
 
 paths:
   /company/register:
