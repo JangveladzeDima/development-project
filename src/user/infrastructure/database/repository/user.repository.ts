@@ -20,4 +20,8 @@ export class UserRepository implements IUserRepository {
         return this.userRepository.findOneBy(params.filter)
     }
 
+    async updateUser(params: { filter: {}; updateParams: {} }): Promise<void> {
+        await this.userRepository.update(params.filter, params.updateParams)
+    }
+
 }
