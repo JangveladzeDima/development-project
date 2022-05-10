@@ -9,5 +9,6 @@ export interface ICompany {
     email: string
     user: number
     password: string
-    salt:string
+    salt: string
+    logo?: string
 }

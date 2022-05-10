@@ -8,13 +8,20 @@ import {UserAdapter} from "../../../user/domain/adapter/user.adapter";
 import {IUserAdapter} from "../../../user/domain/port/user-adapter.interface";
 import {CryptoHashService} from "../../../auth/service/service/crypto-hash.service";
 import {ICryptoHashService} from "../../../auth/service/port/crypto-hash-service.interface";
+import {S3Service} from "../../../aws/s3/service/s3-service";
+import {IS3Service} from "../../../aws/s3/port/s3-service.interface";
+import {CompanyLogoRepository} from "../../infrastructure/database/repository/company-logo.repository";
+import {ICompanyLogoRepository} from "../../infrastructure/database/port/company-logo-repository.interface";
+import {ICompanyLogo} from "../../infrastructure/entity/logo/company-logo.model";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {
     constructor(
         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
         @Inject(UserAdapter) private readonly userAdapter: IUserAdapter,
-        @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService
+        @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
+        @Inject(S3Service) private readonly s3Service: IS3Service,
+        @Inject(CompanyLogoRepository) private readonly companyLogoRepository: ICompanyLogoRepository
     ) {
     }
 
@@ -58,5 +65,36 @@ export class CompanyAdapter implements ICompanyAdapter {
             ...company,
             user: user.ID
         }
+    }
+
+    async addCompanyLogo(file: Express.Multer.File, companyEmail): Promise<ICompanyLogo> {
+        if (file.mimetype !== 'image/png') {
+            throw new BadRequestException('file should by image or png')
+        }
+        const uploadedFileLocation = await this.s3Service.uploadFile({
+            file,
+            filename: companyEmail
+        })
+        const company = await this.companyRepository.getCompany({
+            filter: {
+                email: companyEmail
+            }
+        })
+        const oldLogo = await this.companyLogoRepository.getLogo({
+            filter: {
+                companyID: company.ID
+            }
+        })
+        if (oldLogo !== null) {
+            return this.companyLogoRepository.updateLogo({
+                companyID: company.ID
+            }, {
+                logo: uploadedFileLocation
+            })
+        }
+        return this.companyLogoRepository.add({
+            logo: uploadedFileLocation,
+            companyID: company.ID
+        })
     }
 }
