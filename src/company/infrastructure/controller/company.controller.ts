@@ -1,4 +1,4 @@
-import {Body, Controller, Inject, Logger, Post, Req, UploadedFile, UseGuards} from "@nestjs/common";
+import {Body, Controller, Get, Inject, Logger, Post, Req, UploadedFile, UseGuards} from "@nestjs/common";
 import {CompanyRegistrationDto} from "../dto/company-registration.dto";
 import {CompanyAdapter} from "../../domain/adapter/company.adapter";
 import {ICompanyAdapter} from "../../domain/port/company-adapter.interface";
@@ -8,19 +8,6 @@ import {RolesGuard} from "../../../auth/guard/role.guard";
 import {Request} from "express";
 import {UseInterceptors} from "@nestjs/common";
 import {FileInterceptor} from "@nestjs/platform-express";
-import {diskStorage} from "multer";
-
-const storage = {
-    storage: diskStorage({
-        destination: './uploads/companyLogo',
-        filename: (req, file, cb) => {
-            console.log(req.user['email'])
-            const filename: string = 'dima'
-            const extension: string = '.png'
-            cb(null, `${filename}${extension}`)
-        }
-    })
-}
 
 @Controller('/company')
 export class CompanyController {
@@ -47,21 +34,30 @@ export class CompanyController {
         }
     }
 
-    @Post('upload')
+    @Get('/')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    async getCompany(@Req() req: Request) {
+        try {
+
+        } catch (err) {
+            this.logger.error(err.message)
+            throw err
+        }
+    }
+
+    @Post('logo')
     @Roles('company')
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @UseInterceptors(FileInterceptor('file', storage))
+    @UseInterceptors(FileInterceptor('file'))
     async addCompanyLogo(
         @Req() req: Request,
         @UploadedFile() file: Express.Multer.File
     ) {
         try {
-            // unda aitvirtos aws ze
-            // const email = req.user['email']
-            console.log(file)
+            const logo = await this.companyAdapter.addCompanyLogo(file, req.user['email'])
             return {
-                // file: file.buffer.toString('base64')
-                // file.buffer.toString()
+                logo,
+                message: 'ok'
             }
         } catch (err) {
             this.logger.error(err.message)

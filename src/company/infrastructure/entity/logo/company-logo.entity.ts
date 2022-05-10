@@ -6,8 +6,8 @@ export class CompanyLogoEntity {
     @PrimaryGeneratedColumn()
     ID: number
     @OneToOne(() => CompanyEntity, company => company.ID)
-    @JoinColumn()
-    company: number
+    @JoinColumn({ name: 'companyID' })
+    companyID: number
     @Column()
     logo: string
 }

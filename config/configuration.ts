@@ -1,4 +1,6 @@
 import {TypeOrmModuleOptions} from "@nestjs/typeorm";
+import {WebIdentityCredentials} from "aws-sdk";
+import ClientConfiguration = WebIdentityCredentials.ClientConfiguration;
 
 const databaseConfiguration = (): TypeOrmModuleOptions => ({
     type: 'postgres',
@@ -10,6 +12,18 @@ const databaseConfiguration = (): TypeOrmModuleOptions => ({
     autoLoadEntities: true,
     synchronize: true
 })
+const awsConfiguration = (): ClientConfiguration => ({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    region: process.env.REGION
+})
+const S3Configuration = (): {
+    Bucket: string
+} => ({
+    Bucket: process.env.COMPANY_LOGOS_BUCKET_NAME
+})
 export default () => ({
-    db: databaseConfiguration()
+    db: databaseConfiguration(),
+    aws: awsConfiguration(),
+    s3: S3Configuration()
 })
