@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Inject, Logger, Post} from "@nestjs/common";
+import {Body, Controller, Get, Inject, Logger, Post, HttpCode, Query} from "@nestjs/common";
 import {CreateUserDto} from "../dto/create-user.dto";
 import {UserAdapter} from "../../domain/adapter/user.adapter";
 import {IUserAdapter} from "../../domain/port/user-adapter.interface";
@@ -7,6 +7,7 @@ import {RolesGuard} from "../../../auth/guard/role.guard";
 import {UseGuards} from "@nestjs/common";
 import {JwtAuthGuard} from "../../../auth/guard/jwt.guard";
 import {LoginUserDto} from "../dto/login-user.dto";
+import {GetUserDto} from "../dto/get-user.dto";
 
 @Controller('/user')
 export class UserController {
@@ -34,9 +35,19 @@ export class UserController {
     }
 
     @Get('/')
-    async getUser(@Body('filter') filter: {}) {
+    async getUser(
+        @Query('ID') ID?:number,
+        @Query('email') email?:string,
+        @Query('parentID') parentID?:number,
+        @Query('role') role?:string
+    ) {
         try {
-            const user = await this.userAdapter.getUser(filter)
+            const user = await this.userAdapter.getUser({
+                ID,
+                email,
+                parentID,
+                role
+            })
             return {
                 user,
                 message: 'ok!'
@@ -48,6 +59,7 @@ export class UserController {
     }
 
     @Post('/login')
+    @HttpCode(200)
     async userLogin(@Body() loginParams: LoginUserDto) {
         try {
             const { access_token } = await this.userAdapter.userLogin(loginParams)

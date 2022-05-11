@@ -3,7 +3,7 @@ import {IUserAdapter} from "../port/user-adapter.interface";
 import {CreateUserDto} from "../../infrastructure/dto/create-user.dto";
 import {UserRepository} from "../../infrastructure/database/repository/user.repository";
 import {IUserRepository} from "../../infrastructure/database/port/user-repository.interface";
-import {AvailableRoles} from "../../../constants/available-roles";
+import {AvailableRoles} from "../../../common/constants/available-roles";
 import {IUser} from "../../infrastructure/entity/user.interface";
 import {CryptoHashService} from "../../../auth/service/service/crypto-hash.service";
 import {ICryptoHashService} from "../../../auth/service/port/crypto-hash-service.interface";
@@ -14,6 +14,7 @@ import {JwtAuthService} from "../../../auth/service/service/jwt-auth.service";
 import {IJwtAuthService} from "../../../auth/service/port/jwt--auth-service.interface";
 import {CompanyRepository} from "../../../company/infrastructure/database/repository/company.repository";
 import {ICompanyRepository} from "../../../company/infrastructure/database/port/company-repository.interface";
+import {IUserFilter} from "../../infrastructure/interface/user-filter.interface";
 
 @Injectable()
 export class UserAdapter implements IUserAdapter {
@@ -49,7 +50,7 @@ export class UserAdapter implements IUserAdapter {
         return this.userRepository.create(createUserParams)
     }
 
-    async getUser(filter: {}): Promise<IUser> {
+    async getUser(filter: IUserFilter): Promise<IUser> {
         const user = await this.userRepository.getUser({
             filter
         })

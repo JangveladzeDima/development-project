@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import config from '../../../../config/configuration'
+import config from '../../../common/config/configuration'
 import * as AWS from 'aws-sdk'
 import {IS3Service} from "../port/s3-service.interface";
 
