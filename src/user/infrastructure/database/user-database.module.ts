@@ -5,7 +5,7 @@ import {UserRepository} from "./repository/user.repository";
 import {Repository} from "typeorm";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity]),Repository],
+    imports: [TypeOrmModule.forFeature([UserEntity]), Repository],
     providers: [UserRepository],
     exports: [UserRepository]
 })

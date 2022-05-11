@@ -13,6 +13,11 @@ import {IS3Service} from "../../../aws/s3/port/s3-service.interface";
 import {CompanyLogoRepository} from "../../infrastructure/database/repository/company-logo.repository";
 import {ICompanyLogoRepository} from "../../infrastructure/database/port/company-logo-repository.interface";
 import {ICompanyLogo} from "../../infrastructure/entity/logo/company-logo.model";
+import {CompanyUpdateDto} from "../../infrastructure/dto/company-update.dto";
+import {UserRepository} from "../../../user/infrastructure/database/repository/user.repository";
+import {IUserRepository} from "../../../user/infrastructure/database/port/user-repository.interface";
+import {JwtAuthService} from "../../../auth/service/service/jwt-auth.service";
+import {IJwtAuthService} from "../../../auth/service/port/jwt--auth-service.interface";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {
@@ -21,7 +26,9 @@ export class CompanyAdapter implements ICompanyAdapter {
         @Inject(UserAdapter) private readonly userAdapter: IUserAdapter,
         @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
         @Inject(S3Service) private readonly s3Service: IS3Service,
-        @Inject(CompanyLogoRepository) private readonly companyLogoRepository: ICompanyLogoRepository
+        @Inject(CompanyLogoRepository) private readonly companyLogoRepository: ICompanyLogoRepository,
+        @Inject(UserRepository) private readonly userRepository: IUserRepository,
+        @Inject(JwtAuthService) private readonly jwtAuthService: IJwtAuthService
     ) {
     }
 
@@ -67,7 +74,99 @@ export class CompanyAdapter implements ICompanyAdapter {
         }
     }
 
+    async updateCompany(email, updateParams: CompanyUpdateDto): Promise<{ company: ICompany, access_token: string }> {
+        let accessToken;
+        if (updateParams.email !== undefined) {
+            const user = await this.userRepository.getUser({
+                filter: {
+                    email: updateParams.email
+                }
+            })
+            if (user !== null) {
+                throw new BadRequestException('this email already exists')
+            }
+            await this.companyRepository.updateCompany({
+                filter: {
+                    email
+                },
+                updatedParams: {
+                    email: updateParams.email
+                }
+            })
+            await this.userRepository.updateUser({
+                filter: {
+                    email
+                },
+                updateParams: {
+                    email: updateParams.email
+                }
+            })
+            accessToken = await this.jwtAuthService.login({
+                email: updateParams.email,
+                role: 'company'
+            })
+            email = updateParams.email
+            updateParams.email = undefined
+        }
+        if (updateParams.password !== undefined) {
+            const { hash, salt } = await this.cryptoHashService.generateHashAndSalt(updateParams.password)
+            await this.companyRepository.updateCompany({
+                filter: {
+                    email,
+                },
+                updatedParams: {
+                    password: hash,
+                    salt
+                }
+            })
+            updateParams.password = undefined
+        }
+        await this.companyRepository.updateCompany({
+            filter: {
+                email
+            },
+            updatedParams: {
+                ...updateParams
+            }
+        })
+        const company = await this.companyRepository.getCompany({
+            filter: {
+                email
+            }
+        })
+        let companyLogoProperties = await this.companyLogoRepository.getLogo({
+            filter: {
+                companyID: company.ID
+            }
+        })
+        if (companyLogoProperties !== null) {
+            company.logo = companyLogoProperties.logo
+        }
+        return {
+            company,
+            ...accessToken
+        }
+    }
+
+    async getCompany(email: string): Promise<ICompany> {
+        const company = await this.companyRepository.getCompany({
+            filter: {
+                email
+            }
+        })
+        const { logo } = await this.companyLogoRepository.getLogo({
+            filter: {
+                companyID: company.ID
+            }
+        })
+        company.logo = logo
+        return company
+    }
+
     async addCompanyLogo(file: Express.Multer.File, companyEmail): Promise<ICompanyLogo> {
+        if(file===undefined){
+            throw new BadRequestException('bad file')
+        }
         if (file.mimetype !== 'image/png') {
             throw new BadRequestException('file should by image or png')
         }
