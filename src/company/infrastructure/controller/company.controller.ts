@@ -37,15 +37,16 @@ export class CompanyController {
 
     @Post('logo')
     @Roles('company')
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @UseGuards(JwtAuthGuard)
     @UseInterceptors(FileInterceptor('file'))
     async addCompanyLogo(
         @Req() req: Request,
         @UploadedFile() file: Express.Multer.File
     ) {
+        console.log(req.headers)
         try {
-            const email = req.user['email']
-            const logo = await this.companyAdapter.addCompanyLogo(file, email)
+            // const email = req.user['email']
+            const logo = await this.companyAdapter.addCompanyLogo(file, 'djangveladze@mail.ru')
             return {
                 logo,
                 message: 'ok'

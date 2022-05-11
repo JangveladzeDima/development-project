@@ -164,6 +164,9 @@ export class CompanyAdapter implements ICompanyAdapter {
     }
 
     async addCompanyLogo(file: Express.Multer.File, companyEmail): Promise<ICompanyLogo> {
+        if(file===undefined){
+            throw new BadRequestException('bad file')
+        }
         if (file.mimetype !== 'image/png') {
             throw new BadRequestException('file should by image or png')
         }
