@@ -31,24 +31,5 @@ export class DesignerController {
             this.logger.error(err.message)
             throw err
         }
-
     }
-
-    // @Patch("/update-profile")
-    // async updateDesignerProfile(
-    //     @Body() data: Partial<UpdateDesignerDTO>,
-    //     @Param("username") username: string): Promise<void> {
-    // }
-    //
-    // @Get("/:id")
-    // async getDesignerById(
-    //     @Param("id") id: string): Promise<any> {
-    // }
-    //
-    // @Get("/list")
-    // async getDesigners(
-    //     @Query("pageNumber") pageNumber: "0",
-    //     @Query("limit")
-    //         limit: "3"): Promise<any> {
-    // }
 }

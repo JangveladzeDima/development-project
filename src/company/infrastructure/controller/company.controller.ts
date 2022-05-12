@@ -43,10 +43,9 @@ export class CompanyController {
         @Req() req: Request,
         @UploadedFile() file: Express.Multer.File
     ) {
-        console.log(req.headers)
         try {
-            // const email = req.user['email']
-            const logo = await this.companyAdapter.addCompanyLogo(file, 'djangveladze@mail.ru')
+            const email = req.user['email']
+            const logo = await this.companyAdapter.addCompanyLogo(file, email)
             return {
                 logo,
                 message: 'ok'
