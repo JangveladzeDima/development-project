@@ -1,6 +1,5 @@
 import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,} from "typeorm";
 import {UserEntity} from "../../../../user/infrastructure/entity/user.entity";
-import {CompanyLogoEntity} from "../logo/company-logo.entity";
 
 @Entity('Development-Company')
 export class CompanyEntity {
