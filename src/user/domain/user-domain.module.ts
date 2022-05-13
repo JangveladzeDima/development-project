@@ -5,6 +5,7 @@ import { AuthModule } from "../../auth/auth.module";
 import { CompanyDatabaseModule } from "../../company/infrastructure/database/company-database.module";
 import { DesignerDatabaseModule } from "../../designer/infrastructure/database/designer-database.module";
 import { ClientDatabaseModule } from "../../client/infrastructure/database/client-database.module";
+import { ServiceModule } from "../../serivce/service.module";
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import { ClientDatabaseModule } from "../../client/infrastructure/database/clien
         DesignerDatabaseModule,
         CompanyDatabaseModule,
         ClientDatabaseModule,
+        ServiceModule,
         AuthModule
     ],
     providers: [UserAdapter],

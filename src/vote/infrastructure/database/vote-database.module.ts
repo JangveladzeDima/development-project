@@ -1,16 +1,16 @@
-import {Module} from "@nestjs/common";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {CompanyVoteEntity} from "../entity/company-vote/company-vote.entity";
-import {Repository} from "typeorm";
-import {CompanyVoteRepository} from "./repository/company-vote.repository";
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { VotesRepository } from "./repository/votes.repository";
+import { VotesEntity } from "../entity/vote.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([CompanyVoteEntity]),
+        TypeOrmModule.forFeature([VotesEntity]),
         Repository
     ],
-    providers: [CompanyVoteRepository],
-    exports: [CompanyVoteRepository]
+    providers: [VotesRepository],
+    exports: [VotesRepository]
 })
 export class VoteDatabaseModule {
 }

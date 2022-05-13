@@ -1,14 +1,14 @@
-import {Body, Controller, Get, Inject, Logger, Post, Put, Req, UploadedFile, UseGuards} from "@nestjs/common";
-import {CompanyRegistrationDto} from "../dto/company-registration.dto";
-import {CompanyAdapter} from "../../domain/adapter/company.adapter";
-import {ICompanyAdapter} from "../../domain/port/company-adapter.interface";
-import {Roles} from "../../../auth/decorator/role.decorator";
-import {JwtAuthGuard} from "../../../auth/guard/jwt.guard";
-import {RolesGuard} from "../../../auth/guard/role.guard";
-import {Request} from "express";
-import {UseInterceptors} from "@nestjs/common";
-import {FileInterceptor} from "@nestjs/platform-express";
-import {CompanyUpdateDto} from "../dto/company-update.dto";
+import { Body, Controller, Get, Inject, Logger, Post, Put, Req, UploadedFile, UseGuards } from "@nestjs/common";
+import { CompanyRegistrationDto } from "../dto/company-registration.dto";
+import { CompanyAdapter } from "../../domain/adapter/company.adapter";
+import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
+import { Roles } from "../../../auth/decorator/role.decorator";
+import { JwtAuthGuard } from "../../../auth/guard/jwt.guard";
+import { RolesGuard } from "../../../auth/guard/role.guard";
+import { Request } from "express";
+import { UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { CompanyUpdateDto } from "../dto/company-update.dto";
 
 @Controller('/company')
 export class CompanyController {

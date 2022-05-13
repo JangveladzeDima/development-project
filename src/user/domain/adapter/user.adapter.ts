@@ -17,6 +17,8 @@ import { ICompanyRepository } from "../../../company/infrastructure/database/por
 import { IUserFilter } from "../../infrastructure/interface/user-filter.interface";
 import { ClientRepository } from "../../../client/infrastructure/database/repository/client.repository";
 import { IClientRepository } from "../../../client/infrastructure/database/port/client-repository.interface";
+import { UserService } from "../../../serivce/user/service/user.service";
+import { IUserService } from "../../../serivce/user/port/user-service.interface";
 
 @Injectable()
 export class UserAdapter implements IUserAdapter {
@@ -26,7 +28,8 @@ export class UserAdapter implements IUserAdapter {
         @Inject(DesignerRepository) private readonly designerRepository: IDesignerRepository,
         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
         @Inject(JwtAuthService) private readonly jwtAuthService: IJwtAuthService,
-        @Inject(ClientRepository) private readonly clientRepository: IClientRepository
+        @Inject(ClientRepository) private readonly clientRepository: IClientRepository,
+        @Inject(UserService) private readonly userService: IUserService
     ) {
     }
 
@@ -73,7 +76,7 @@ export class UserAdapter implements IUserAdapter {
             throw new BadRequestException('email dont correct')
         }
         const { role } = user
-        const userByRole = await this.getUserByRole(loginParams.email, role)
+        const userByRole = await this.userService.getUserByRole({ email: loginParams.email }, role) //update
         const { password, salt } = userByRole
         const hashedPassword = await this.cryptoHashService.generateHashBySalt(loginParams.password, salt)
         if (password !== hashedPassword) {
@@ -83,29 +86,5 @@ export class UserAdapter implements IUserAdapter {
             email: loginParams.email,
             role
         })
-    }
-
-    private async getUserByRole(email, role) {
-        if (role === 'designer') {
-            return this.designerRepository.getDesigner({
-                filter: {
-                    email
-                }
-            })
-        }
-        if (role === 'company') {
-            return this.companyRepository.getCompany(({
-                filter: {
-                    email
-                }
-            }))
-        }
-        if (role === 'client') {
-            return this.clientRepository.getClient({
-                filter: {
-                    email
-                }
-            })
-        }
     }
 }

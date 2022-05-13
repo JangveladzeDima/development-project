@@ -6,6 +6,7 @@ import { DesignerModule } from "./designer/designer.module";
 import { CompanyModule } from "./company/company.module";
 import config from "./common/config/configuration";
 import { ClientModule } from "./client/client.module";
+import { VoteModule } from "./vote/vote.module";
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import { ClientModule } from "./client/client.module";
         UserModule,
         DesignerModule,
         CompanyModule,
-        ClientModule
+        ClientModule,
+        VoteModule
     ],
     controllers: [],
     providers: [],

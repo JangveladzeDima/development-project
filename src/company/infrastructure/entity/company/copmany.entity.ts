@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,} from "typeorm";
 import {UserEntity} from "../../../../user/infrastructure/entity/user.entity";
 
-@Entity('Development-Company')
+@Entity('company')
 export class CompanyEntity {
     @PrimaryGeneratedColumn()
     ID: number
