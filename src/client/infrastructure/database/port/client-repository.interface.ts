@@ -6,4 +6,6 @@ export interface IClientRepository {
     create(client: Partial<IClient>): Promise<IClient>
 
     update(filter: IClientFilter, updateParams: IClientUpdate): Promise<any>
+
+    getClient(params: { filter: IClientFilter }): Promise<IClient>
 }

@@ -7,7 +7,6 @@ import {RolesGuard} from "../../../auth/guard/role.guard";
 import {UseGuards} from "@nestjs/common";
 import {JwtAuthGuard} from "../../../auth/guard/jwt.guard";
 import {LoginUserDto} from "../dto/login-user.dto";
-import {GetUserDto} from "../dto/get-user.dto";
 
 @Controller('/user')
 export class UserController {
