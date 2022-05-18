@@ -2,9 +2,9 @@ import { Body, Controller, Get, Inject, Logger, Post, Put, Req, UploadedFile, Us
 import { CompanyRegistrationDto } from "../dto/company-registration.dto";
 import { CompanyAdapter } from "../../domain/adapter/company.adapter";
 import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
-import { Roles } from "../../../auth/decorator/role.decorator";
-import { JwtAuthGuard } from "../../../auth/guard/jwt.guard";
-import { RolesGuard } from "../../../auth/guard/role.guard";
+import { Roles } from "../../../api/src/auth/decorator/role.decorator";
+import { JwtAuthGuard } from "../../../api/src/auth/guard/jwt.guard";
+import { RolesGuard } from "../../../api/src/auth/guard/role.guard";
 import { Request } from "express";
 import { UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";

@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { UserEntity } from "../../../user/infrastructure/entity/user.entity";
+import { UserEntity } from "../../../user/src/infrastructure/entity/user.entity";
 
 @Entity('votes')
 export class VotesEntity {

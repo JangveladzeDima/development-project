@@ -1,8 +1,8 @@
 import {Module} from "@nestjs/common";
 import {DesignerAdapter} from "./adapter/designer.adapter";
 import {DesignerDatabaseModule} from "../infrastructure/database/designer-database.module";
-import {UserDomainModule} from "../../user/domain/user-domain.module";
-import {AuthModule} from "../../auth/auth.module";
+import {UserDomainModule} from "../../user/src/domain/user-domain.module";
+import {AuthModule} from "../../api/src/auth/auth.module";
 
 @Module({
     imports: [DesignerDatabaseModule, UserDomainModule, AuthModule],

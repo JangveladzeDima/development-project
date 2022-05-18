@@ -4,20 +4,20 @@ import {CompanyRegistrationDto} from "../../infrastructure/dto/company-registrat
 import {ICompany} from "../../infrastructure/entity/company/company.model";
 import {CompanyRepository} from "../../infrastructure/database/repository/company.repository";
 import {ICompanyRepository} from "../../infrastructure/database/port/company-repository.interface";
-import {UserAdapter} from "../../../user/domain/adapter/user.adapter";
-import {IUserAdapter} from "../../../user/domain/port/user-adapter.interface";
-import {CryptoHashService} from "../../../auth/service/service/crypto-hash.service";
-import {ICryptoHashService} from "../../../auth/service/port/crypto-hash-service.interface";
+import {UserAdapter} from "../../../user/src/domain/adapter/user.adapter";
+import {IUserAdapter} from "../../../user/src/domain/port/user-adapter.interface";
+import {CryptoHashService} from "../../../api/src/auth/service/service/crypto-hash.service";
+import {ICryptoHashService} from "../../../api/src/auth/service/port/crypto-hash-service.interface";
 import {S3Service} from "../../../aws/s3/service/s3-service";
 import {IS3Service} from "../../../aws/s3/port/s3-service.interface";
 import {CompanyLogoRepository} from "../../infrastructure/database/repository/company-logo.repository";
 import {ICompanyLogoRepository} from "../../infrastructure/database/port/company-logo-repository.interface";
 import {ICompanyLogo} from "../../infrastructure/entity/logo/company-logo.model";
 import {CompanyUpdateDto} from "../../infrastructure/dto/company-update.dto";
-import {UserRepository} from "../../../user/infrastructure/database/repository/user.repository";
-import {IUserRepository} from "../../../user/infrastructure/database/port/user-repository.interface";
-import {JwtAuthService} from "../../../auth/service/service/jwt-auth.service";
-import {IJwtAuthService} from "../../../auth/service/port/jwt--auth-service.interface";
+import {UserRepository} from "../../../user/src/infrastructure/database/repository/user.repository";
+import {IUserRepository} from "../../../user/src/infrastructure/database/port/user-repository.interface";
+import {JwtAuthService} from "../../../api/src/auth/service/service/jwt-auth.service";
+import {IJwtAuthService} from "../../../api/src/auth/service/port/jwt--auth-service.interface";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {

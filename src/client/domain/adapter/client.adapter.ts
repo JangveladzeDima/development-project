@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { IClientAdapter } from "../port/client-adapter.interface";
 import { IClient } from "../../infrastructure/entity/client.model";
-import { UserRepository } from "../../../user/infrastructure/database/repository/user.repository";
-import { IUserRepository } from "../../../user/infrastructure/database/port/user-repository.interface";
-import { CryptoHashService } from "../../../auth/service/service/crypto-hash.service";
-import { ICryptoHashService } from "../../../auth/service/port/crypto-hash-service.interface";
+import { UserRepository } from "../../../user/src/infrastructure/database/repository/user.repository";
+import { IUserRepository } from "../../../user/src/infrastructure/database/port/user-repository.interface";
+import { CryptoHashService } from "../../../api/src/auth/service/service/crypto-hash.service";
+import { ICryptoHashService } from "../../../api/src/auth/service/port/crypto-hash-service.interface";
 import { ClientRepository } from "../../infrastructure/database/repository/client.repository";
 import { IClientRepository } from "../../infrastructure/database/port/client-repository.interface";
 

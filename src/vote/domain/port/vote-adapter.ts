@@ -2,11 +2,11 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { IVoteAdapter } from "../adapter/vote-adapter.interface";
 import { IVoteCreate } from "../../../company/infrastructure/interface/vote-create.interface";
 import { IVotes } from "../../infrastructure/entity/vote.interface";
-import { IUserRepository } from "../../../user/infrastructure/database/port/user-repository.interface";
-import { UserRepository } from "../../../user/infrastructure/database/repository/user.repository";
+import {IUserRepository} from "../../../user/src/infrastructure/database/port/user-repository.interface";
+import { UserRepository } from "../../../user/src/infrastructure/database/repository/user.repository";
 import { VotesRepository } from "../../infrastructure/database/repository/votes.repository";
 import { IVotesRepository } from "../../infrastructure/database/port/votes-repository.interface";
-import { IUser } from "../../../user/infrastructure/entity/user.interface";
+import { IUser } from "../../../user/src/infrastructure/entity/user.interface";
 import { UserService } from "../../../serivce/user/service/user.service";
 import { IUserService } from "../../../serivce/user/port/user-service.interface";
 

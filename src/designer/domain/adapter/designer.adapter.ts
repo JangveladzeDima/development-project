@@ -3,10 +3,10 @@ import {IDesignerAdapter} from "../port/designer-adapter.interface";
 import {DesignerRepository} from "../../infrastructure/database/repository/designer.repository";
 import {IDesignerRepository} from "../../infrastructure/database/port/designer-repository.interface";
 import {CreateDesignerDTO} from "../../infrastructure/dto/create-designer.dto";
-import {UserAdapter} from "../../../user/domain/adapter/user.adapter";
-import {IUserAdapter} from "../../../user/domain/port/user-adapter.interface";
-import {CryptoHashService} from "../../../auth/service/service/crypto-hash.service";
-import {ICryptoHashService} from "../../../auth/service/port/crypto-hash-service.interface";
+import {UserAdapter} from "../../../user/src/domain/adapter/user.adapter";
+import {IUserAdapter} from "../../../user/src/domain/port/user-adapter.interface";
+import {CryptoHashService} from "../../../api/src/auth/service/service/crypto-hash.service";
+import {ICryptoHashService} from "../../../api/src/auth/service/port/crypto-hash-service.interface";
 import {IDesigner} from "../../infrastructure/entity/designer.interface";
 
 @Injectable()

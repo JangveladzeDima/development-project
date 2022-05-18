@@ -1,10 +1,10 @@
 import { Body, Controller, Inject, Logger, Post, UseGuards, Req } from "@nestjs/common";
-import { Roles } from "../../../auth/decorator/role.decorator";
+import { Roles } from "../../../api/src/auth/decorator/role.decorator";
 import { AddVoteDto } from "../dto/add-vote.dto";
 import { VoteAdapter } from "../../domain/port/vote-adapter";
 import { IVoteAdapter } from "../../domain/adapter/vote-adapter.interface";
-import { JwtAuthGuard } from "../../../auth/guard/jwt.guard";
-import { RolesGuard } from "../../../auth/guard/role.guard";
+import { JwtAuthGuard } from "../../../api/src/auth/guard/jwt.guard";
+import { RolesGuard } from "../../../api/src/auth/guard/role.guard";
 import { Request } from 'express'
 
 @Controller('/vote')
