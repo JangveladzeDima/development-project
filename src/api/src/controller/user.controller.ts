@@ -2,9 +2,9 @@ import { Body, Controller, Get, HttpCode, Inject, Logger, Post, Query, } from "@
 import { CreateUserDto } from "../dto/user/create-user.dto";
 import { Roles } from "../auth/decorator/role.decorator";
 import { LoginUserDto } from "../dto/user/login-user.dto";
-import { UserService } from "../service/user.service";
+import { UserService } from "../service/user/user.service";
 import { IUserCreateResponse } from "../interface/user/user-create-response.interface";
-import { IUserService } from "../service/user-service.interface";
+import { IUserService } from "../service/user/user-service.interface";
 import { IUserFilter } from "../interface/user/user-filter.interface";
 
 @Controller('/user')

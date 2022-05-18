@@ -23,3 +23,5 @@ coverage
 
 
 dist/*
+src/*/dist/*
+src/api/dist

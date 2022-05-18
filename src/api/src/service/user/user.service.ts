@@ -1,10 +1,10 @@
 import { HttpException, Inject, Injectable } from "@nestjs/common";
-import { CreateUserDto } from "../dto/user/create-user.dto";
+import { CreateUserDto } from "../../dto/user/create-user.dto";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
-import { IUser } from "../interface/user/user.interface";
+import { IUser } from "../../interface/user/user.interface";
 import { IUserService } from "./user-service.interface";
-import { IUserFilter } from "../interface/user/user-filter.interface";
+import { IUserFilter } from "../../interface/user/user-filter.interface";
 
 @Injectable()
 export class UserService implements IUserService {
