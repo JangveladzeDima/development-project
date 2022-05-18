@@ -42,6 +42,15 @@ let UserAdapter = class UserAdapter {
         }
         return this.userRepository.create(createUserParams);
     }
+    async getUser(filter) {
+        const user = await this.userRepository.getUser({
+            filter
+        });
+        if (user === null) {
+            throw new common_1.BadRequestException('user dont exists');
+        }
+        return user;
+    }
 };
 UserAdapter = __decorate([
     (0, common_1.Injectable)(),

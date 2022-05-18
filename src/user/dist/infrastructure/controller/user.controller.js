@@ -21,9 +21,8 @@ let UserController = class UserController {
     constructor(userAdapter) {
         this.userAdapter = userAdapter;
     }
-    async create(user, context) {
+    async create(user) {
         try {
-            console.log(user);
             const newUser = await this.userAdapter.create(user);
             return newUser;
         }
@@ -31,15 +30,30 @@ let UserController = class UserController {
             console.log(err);
         }
     }
+    async getUser(filter) {
+        try {
+            const user = await this.userAdapter.getUser(filter);
+            return user;
+        }
+        catch (err) {
+            return err;
+        }
+    }
 };
 __decorate([
     (0, microservices_2.MessagePattern)('create-user'),
     __param(0, (0, microservices_1.Payload)()),
-    __param(1, (0, microservices_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, microservices_1.RmqContext]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
+__decorate([
+    (0, microservices_2.MessagePattern)('get-user'),
+    __param(0, (0, microservices_1.Payload)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUser", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __param(0, (0, common_1.Inject)(user_adapter_1.UserAdapter)),

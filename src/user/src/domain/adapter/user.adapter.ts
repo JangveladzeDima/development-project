@@ -4,18 +4,19 @@ import { IUserRepository } from "../../infrastructure/database/port/user-reposit
 import { IUser } from "../../infrastructure/entity/user.interface";
 import { AvailableRoles } from "../../infrastructure/constants/available-roles";
 import { IUserAdapter } from "../port/user-adapter.interface";
+import { IUserFilter } from "../../infrastructure/interface/user-filter.interface";
 
 //
 @Injectable()
 export class UserAdapter implements IUserAdapter {
     constructor(
-           @Inject(UserRepository) private readonly userRepository: IUserRepository
-//         @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
-//         @Inject(DesignerRepository) private readonly designerRepository: IDesignerRepository,
-//         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
-//         @Inject(JwtAuthService) private readonly jwtAuthService: IJwtAuthService,
-//         @Inject(ClientRepository) private readonly clientRepository: IClientRepository,
-//         @Inject(UserService) private readonly userService: IUserService
+        @Inject(UserRepository) private readonly userRepository: IUserRepository
+        //         @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
+        //         @Inject(DesignerRepository) private readonly designerRepository: IDesignerRepository,
+        //         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
+        //         @Inject(JwtAuthService) private readonly jwtAuthService: IJwtAuthService,
+        //         @Inject(ClientRepository) private readonly clientRepository: IClientRepository,
+        //         @Inject(UserService) private readonly userService: IUserService
     ) {
     }
 
@@ -43,16 +44,17 @@ export class UserAdapter implements IUserAdapter {
         return this.userRepository.create(createUserParams)
     }
 
-//
-//     async getUser(filter: IUserFilter): Promise<IUser> {
-//         const user = await this.userRepository.getUser({
-//             filter
-//         })
-//         if (user === null) {
-//             throw new BadRequestException('user dont exists')
-//         }
-//         return user
-//     }
+
+    async getUser(filter: IUserFilter): Promise<IUser> {
+        const user = await this.userRepository.getUser({
+            filter
+        })
+        if (user === null) {
+            throw new BadRequestException('user dont exists')
+        }
+        return user
+    }
+
 //
 //     async userLogin(loginParams: LoginUserDto): Promise<{ access_token: string }> {
 //         const user = await this.userRepository.getUser({
