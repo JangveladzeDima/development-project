@@ -14,7 +14,7 @@ export class UserService implements IUserService {
     }
 
     async create(createUserParams: CreateUserDto): Promise<IUser> {
-        const user = await firstValueFrom(this.userService.send('create-user', createUserParams))
+        const user = await firstValueFrom(this.userService.send('user-create', createUserParams))
         return user
     }
 

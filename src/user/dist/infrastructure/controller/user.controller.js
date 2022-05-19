@@ -41,7 +41,7 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, microservices_2.MessagePattern)('create-user'),
+    (0, microservices_2.MessagePattern)('user-create'),
     __param(0, (0, microservices_1.Payload)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

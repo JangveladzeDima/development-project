@@ -1,10 +1,10 @@
-import {Module} from "@nestjs/common";
-import {CompanyController} from "./controller/company.controller";
-import {CompanyDomainModule} from "../domain/company-domain.module";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {CompanyEntity} from "./entity/company/copmany.entity";
-import {UserEntity} from "./entity/user.entity";
-import {CompanyLogoEntity} from "./entity/logo/company-logo.entity";
+import { Module } from "@nestjs/common";
+import { CompanyController } from "./controller/company.controller";
+import { CompanyDomainModule } from "../domain/company-domain.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { CompanyEntity } from "./entity/company/copmany.entity";
+import { UserEntity } from "./entity/user.entity";
+import { CompanyLogoEntity } from "./entity/logo/company-logo.entity";
 
 @Module({
     imports: [

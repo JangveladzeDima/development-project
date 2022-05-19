@@ -11,8 +11,7 @@ export class DesignerService implements IDesignerService {
     }
 
     async create(designerParams) {
-        console.log(designerParams)
-        const designer = await firstValueFrom(this.designerService.send('create-designer', designerParams))
+        const designer = await firstValueFrom(this.designerService.send('designer-create', designerParams))
         return designer
     }
 }

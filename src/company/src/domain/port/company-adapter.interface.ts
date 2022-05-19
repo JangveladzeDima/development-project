@@ -1,5 +1,5 @@
-import {CompanyRegistrationDto} from "../../infrastructure/dto/company-registration.dto";
-import {ICompany} from "../../infrastructure/entity/company/company.model";
+import { CompanyRegistrationDto } from "../../infrastructure/dto/company-registration.dto";
+import { ICompany } from "../../infrastructure/entity/company/company.model";
 // import {ICompanyLogo} from "../../infrastructure/entity/logo/company-logo.model";
 // import {CompanyUpdateDto} from "../../infrastructure/dto/company-update.dto";
 

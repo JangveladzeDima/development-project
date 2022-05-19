@@ -1,25 +1,25 @@
-import {BadRequestException, Inject, Injectable} from "@nestjs/common";
-import {ICompanyAdapter} from "../port/company-adapter.interface";
-import {CompanyRegistrationDto} from "../../infrastructure/dto/company-registration.dto";
-import {ICompany} from "../../infrastructure/entity/company/company.model";
-import {CompanyRepository} from "../../infrastructure/database/repository/company.repository";
-import {ICompanyRepository} from "../../infrastructure/database/port/company-repository.interface";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { ICompanyAdapter } from "../port/company-adapter.interface";
+import { CompanyRegistrationDto } from "../../infrastructure/dto/company-registration.dto";
+import { ICompany } from "../../infrastructure/entity/company/company.model";
+import { CompanyRepository } from "../../infrastructure/database/repository/company.repository";
+import { ICompanyRepository } from "../../infrastructure/database/port/company-repository.interface";
 // import {UserAdapter} from "../../../../user/src/domain/adapter/user.adapter";
 // import {IUserAdapter} from "../../../../user/src/domain/port/user-adapter.interface";
 // import {CryptoHashService} from "../../../../api/src/auth/service/service/crypto-hash.service";
 // import {ICryptoHashService} from "../../../../api/src/auth/service/port/crypto-hash-service.interface";
 // import {S3Service} from "../../../../aws/s3/service/s3-service";
 // import {IS3Service} from "../../../../aws/s3/port/s3-service.interface";
-import {CompanyLogoRepository} from "../../infrastructure/database/repository/company-logo.repository";
-import {ICompanyLogoRepository} from "../../infrastructure/database/port/company-logo-repository.interface";
-import {ICompanyLogo} from "../../infrastructure/entity/logo/company-logo.model";
-import {CompanyUpdateDto} from "../../infrastructure/dto/company-update.dto";
+import { CompanyLogoRepository } from "../../infrastructure/database/repository/company-logo.repository";
+import { ICompanyLogoRepository } from "../../infrastructure/database/port/company-logo-repository.interface";
+import { ICompanyLogo } from "../../infrastructure/entity/logo/company-logo.model";
+import { CompanyUpdateDto } from "../../infrastructure/dto/company-update.dto";
 // import {UserRepository} from "../../../../user/src/infrastructure/database/repository/user.repository";
 // import {IUserRepository} from "../../../../user/src/infrastructure/database/port/user-repository.interface";
 // import {JwtAuthService} from "../../../../api/src/auth/service/service/jwt-auth.service";
 // import {IJwtAuthService} from "../../../../api/src/auth/service/port/jwt--auth-service.interface";
-import {ClientProxy} from "@nestjs/microservices";
-import {firstValueFrom} from "rxjs";
+import { ClientProxy } from "@nestjs/microservices";
+import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {
@@ -27,11 +27,6 @@ export class CompanyAdapter implements ICompanyAdapter {
         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
         @Inject(CompanyLogoRepository) private readonly companyLogoRepository: ICompanyLogoRepository,
         @Inject('USER_SERVICE') private readonly userService: ClientProxy
-        // @Inject(UserAdapter) private readonly userAdapter: IUserAdapter,
-        // @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
-        // @Inject(S3Service) private readonly s3Service: IS3Service,
-        // @Inject(UserRepository) private readonly userRepository: IUserRepository,
-        // @Inject(JwtAuthService) private readonly jwtAuthService: IJwtAuthService
     ) {
     }
 
@@ -58,8 +53,13 @@ export class CompanyAdapter implements ICompanyAdapter {
         //     password: hash,
         //     salt
         // })
-        const newCompany = await this.companyRepository.create(registrationParams)
-        const user = await firstValueFrom(this.userService.send('create-user', {
+        console.log(registrationParams)
+        const newCompany = await this.companyRepository.create({
+            ...registrationParams,
+            password:'dima',
+            salt:"asdsasdasd"
+        })
+        const user = await firstValueFrom(this.userService.send('user-create', {
             parentID: newCompany.ID,
             email: newCompany.email,
             role: 'company'

@@ -13,7 +13,7 @@ export class UserController {
     ) {
     }
 
-    @MessagePattern('create-user')
+    @MessagePattern('user-create')
     async create(@Payload() user): Promise<IUser> {
         try {
             const newUser = await this.userAdapter.create(user)

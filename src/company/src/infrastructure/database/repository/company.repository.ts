@@ -16,11 +16,11 @@ export class CompanyRepository implements ICompanyRepository {
         return this.companyRepository.save(companyParams)
     }
 
-    // async updateCompany(params: { filter: {}; updatedParams: {} }): Promise<void> {
-    //     await this.companyRepository.update(params.filter, params.updatedParams)
-    // }
+    async updateCompany(params: { filter: {}; updatedParams: {} }): Promise<void> {
+        await this.companyRepository.update(params.filter, params.updatedParams)
+    }
 
-    // async getCompany(params: { filter: {} }): Promise<ICompany> {
-    //     return this.companyRepository.findOneBy(params.filter)
-    // }
+    async getCompany(params: { filter: {} }): Promise<ICompany> {
+        return this.companyRepository.findOneBy(params.filter)
+    }
 }

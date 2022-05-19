@@ -1,5 +1,5 @@
-import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,} from "typeorm";
-import {UserEntity} from "../../../../../user/src/infrastructure/entity/user.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, } from "typeorm";
+import { UserEntity } from "../user.entity";
 
 @Entity('company')
 export class CompanyEntity {

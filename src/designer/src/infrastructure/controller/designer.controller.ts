@@ -16,10 +16,9 @@ export class DesignerController {
     ) {
     }
 
-    @MessagePattern("create-designer")
+    @MessagePattern("designer-create")
     async createDesigner(@Payload() designer, @Ctx() context: RmqContext): Promise<any> {
         try {
-            console.log(designer);
             const newDesigner = await this.designerAdapter.create(designer);
             return {
                 newDesigner,
