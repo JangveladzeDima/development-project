@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { IVoteAdapter } from "../adapter/vote-adapter.interface";
-import { IVoteCreate } from "../../../company/infrastructure/interface/vote-create.interface";
+import { IVoteCreate } from "../../../company/src/infrastructure/interface/vote-create.interface";
 import { IVotes } from "../../infrastructure/entity/vote.interface";
 import {IUserRepository} from "../../../user/src/infrastructure/database/port/user-repository.interface";
 import { UserRepository } from "../../../user/src/infrastructure/database/repository/user.repository";
