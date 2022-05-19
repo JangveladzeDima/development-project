@@ -16,9 +16,9 @@ export class CompanyLogoRepository implements ICompanyLogoRepository {
         return this.companyLogoRepository.save(logoParams)
     }
 
-    // async getLogo(params: { filter: {} }): Promise<ICompanyLogo> {
-    //     return this.companyLogoRepository.findOneBy(params.filter)
-    // }
+    async getLogo(params: { filter: {} }): Promise<ICompanyLogo> {
+        return this.companyLogoRepository.findOneBy(params.filter)
+    }
 
     // async updateLogo(updatedLogo: {}, updateParams: {}): Promise<ICompanyLogo> {
     //     const logo = await this.companyLogoRepository.findOneBy(updatedLogo)

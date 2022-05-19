@@ -19,7 +19,7 @@ export class UserController {
             const newUser = await this.userAdapter.create(user)
             return newUser
         } catch (err) {
-            console.log(err)
+            return err
         }
     }
 

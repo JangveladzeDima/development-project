@@ -6,6 +6,7 @@ import {
 import { DesignerAdapter } from "../../domain/adapter/designer.adapter";
 import { IDesignerAdapter } from "../../domain/port/designer-adapter.interface";
 import { Ctx, Payload, RmqContext, MessagePattern } from "@nestjs/microservices";
+import { DesignerRegistrationDto } from "../dto/designer-registration.dto";
 
 @Controller("designer")
 export class DesignerController {
@@ -17,16 +18,13 @@ export class DesignerController {
     }
 
     @MessagePattern("designer-create")
-    async createDesigner(@Payload() designer, @Ctx() context: RmqContext): Promise<any> {
+    async createDesigner(@Payload() designer: DesignerRegistrationDto, @Ctx() context: RmqContext): Promise<any> {
         try {
             const newDesigner = await this.designerAdapter.create(designer);
-            return {
-                newDesigner,
-                message: "Designer created"
-            };
+            return newDesigner
         } catch (err) {
             this.logger.error(err.message);
-            throw err;
+            return err;
         }
     }
 }

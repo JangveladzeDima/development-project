@@ -7,6 +7,7 @@ import { IDesignerRepository } from "../../infrastructure/database/port/designer
 import { IDesigner } from "../../infrastructure/entity/designer.interface";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
+import { DesignerRegistrationDto } from "../../infrastructure/dto/designer-registration.dto";
 
 @Injectable()
 export class DesignerAdapter implements IDesignerAdapter {
@@ -18,7 +19,7 @@ export class DesignerAdapter implements IDesignerAdapter {
     ) {
     }
 
-    async create(createDesignerParams): Promise<IDesigner> {
+    async create(createDesignerParams: DesignerRegistrationDto): Promise<IDesigner> {
         const designerByEmail = await this.designerRepository.getDesigner({
             filter: {
                 email: createDesignerParams.email

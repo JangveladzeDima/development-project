@@ -20,6 +20,7 @@ import { CompanyUpdateDto } from "../../infrastructure/dto/company-update.dto";
 // import {IJwtAuthService} from "../../../../api/src/auth/service/port/jwt--auth-service.interface";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
+import { ICompanyFilter } from "../../infrastructure/interface/company-filter.interface";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {
@@ -53,11 +54,10 @@ export class CompanyAdapter implements ICompanyAdapter {
         //     password: hash,
         //     salt
         // })
-        console.log(registrationParams)
         const newCompany = await this.companyRepository.create({
             ...registrationParams,
-            password:'dima',
-            salt:"asdsasdasd"
+            password: 'dima',
+            salt: "asdsasdasd"
         })
         const user = await firstValueFrom(this.userService.send('user-create', {
             parentID: newCompany.ID,
@@ -152,6 +152,24 @@ export class CompanyAdapter implements ICompanyAdapter {
     //         ...accessToken
     //     }
     // }
+
+    async getCompany(filter: ICompanyFilter): Promise<ICompany> {
+        const company = await this.companyRepository.getCompany({
+            filter
+        })
+        if (company === null) {
+            throw new BadRequestException('company dont exists')
+        }
+        const logo = await this.companyLogoRepository.getLogo({
+            filter: {
+                companyID: company.ID
+            }
+        })
+        if (logo !== null) {
+            company.logo = logo.logo
+        }
+        return company
+    }
 
     // async getCompany(email: string): Promise<ICompany> {
     //     const company = await this.companyRepository.getCompany({

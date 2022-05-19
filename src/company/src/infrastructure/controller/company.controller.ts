@@ -3,6 +3,7 @@ import { CompanyRegistrationDto } from "../dto/company-registration.dto";
 import { CompanyAdapter } from "../../domain/adapter/company.adapter";
 import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
 import { Payload, Ctx, RmqContext, MessagePattern } from '@nestjs/microservices'
+import { ICompanyFilter } from "../interface/company-filter.interface";
 // import { Roles } from "../../../../api/src/auth/decorator/role.decorator";
 // import { JwtAuthGuard } from "../../../../api/src/auth/guard/jwt.guard";
 // import { RolesGuard } from "../../../../api/src/auth/guard/role.guard";
@@ -26,13 +27,10 @@ export class CompanyController {
     ): Promise<any> {
         try {
             const company = await this.companyAdapter.registration(registrationParams)
-            return {
-                company,
-                message: 'ok!'
-            }
+            return company
         } catch (err) {
             this.logger.error(err.message)
-            throw err
+            return err
         }
     }
 
@@ -77,20 +75,15 @@ export class CompanyController {
     //     }
     // }
 
-    // @Get('/')
-    // @Roles('company')
-    // @UseGuards(JwtAuthGuard, RolesGuard)
-    // async getCompany(@Req() req: Request) {
-    //     try {
-    //         const email = req.user['email']
-    //         const company = await this.companyAdapter.getCompany(email)
-    //         return {
-    //             company,
-    //             message: 'ok'
-    //         }
-    //     } catch (err) {
-    //         this.logger.error(err.message)
-    //         throw err
-    //     }
-    // }
+    @Get('/')
+    @MessagePattern('company-get')
+    async getCompany(@Payload() filter: ICompanyFilter) {
+        try {
+            const company = await this.companyAdapter.getCompany(filter)
+            return company
+        } catch (err) {
+            this.logger.error(err.message)
+            throw err
+        }
+    }
 }

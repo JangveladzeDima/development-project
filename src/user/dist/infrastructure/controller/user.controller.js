@@ -27,7 +27,7 @@ let UserController = class UserController {
             return newUser;
         }
         catch (err) {
-            console.log(err);
+            return err;
         }
     }
     async getUser(filter) {
