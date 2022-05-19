@@ -27,7 +27,8 @@ export class CompanyAdapter implements ICompanyAdapter {
     constructor(
         @Inject(CompanyRepository) private readonly companyRepository: ICompanyRepository,
         @Inject(CompanyLogoRepository) private readonly companyLogoRepository: ICompanyLogoRepository,
-        @Inject('USER_SERVICE') private readonly userService: ClientProxy
+        @Inject('USER_SERVICE') private readonly userService: ClientProxy,
+        @Inject('HASH_SERVICE') private readonly hashService: ClientProxy
     ) {
     }
 
@@ -48,16 +49,14 @@ export class CompanyAdapter implements ICompanyAdapter {
         if (companyByEmail !== null) {
             throw new BadRequestException('email already exists')
         }
-        // const { hash, salt } = await this.cryptoHashService.generateHashAndSalt(registrationParams.password)
-        // const company = await this.companyRepository.create({
-        //     ...registrationParams,
-        //     password: hash,
-        //     salt
-        // })
+        const {
+            hash,
+            salt
+        } = await firstValueFrom(this.hashService.send('get-hash-and-salt-by-text', registrationParams.password))
         const newCompany = await this.companyRepository.create({
             ...registrationParams,
-            password: 'dima',
-            salt: "asdsasdasd"
+            password: hash,
+            salt
         })
         const user = await firstValueFrom(this.userService.send('user-create', {
             parentID: newCompany.ID,

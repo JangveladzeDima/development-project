@@ -18,6 +18,17 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
                 }
             }
         ]),
+        ClientsModule.register([{
+            name: 'HASH_SERVICE',
+            transport: Transport.RMQ,
+            options: {
+                urls: ['amqp://guest:guest@localhost:5672'],
+                queue: 'hash_queue',
+                queueOptions: {
+                    durable: false
+                }
+            }
+        }]),
         CompanyDatabaseModule,
     ],
     providers: [CompanyAdapter],
