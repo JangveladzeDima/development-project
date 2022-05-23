@@ -1,16 +1,9 @@
-import { Body, Controller, Get, Inject, Logger, Post, Put, Req, UploadedFile, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Logger } from "@nestjs/common";
 import { CompanyRegistrationDto } from "../dto/company-registration.dto";
 import { CompanyAdapter } from "../../domain/adapter/company.adapter";
 import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
 import { Payload, Ctx, RmqContext, MessagePattern } from '@nestjs/microservices'
 import { ICompanyFilter } from "../interface/company-filter.interface";
-// import { Roles } from "../../../../api/src/auth/decorator/role.decorator";
-// import { JwtAuthGuard } from "../../../../api/src/auth/guard/jwt.guard";
-// import { RolesGuard } from "../../../../api/src/auth/guard/role.guard";
-// import { Request } from "express";
-// import { UseInterceptors } from "@nestjs/common";
-// import { FileInterceptor } from "@nestjs/platform-express";
-// import { CompanyUpdateDto } from "../dto/company-update.dto";
 
 @Controller('/company')
 export class CompanyController {

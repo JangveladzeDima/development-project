@@ -1,6 +1,6 @@
 import { Controller, Inject } from "@nestjs/common";
-import { Ctx, Payload, RmqContext } from "@nestjs/microservices";
-import { MessagePattern, EventPattern } from "@nestjs/microservices";
+import { Payload } from "@nestjs/microservices";
+import { MessagePattern } from "@nestjs/microservices";
 import { UserAdapter } from "../../domain/adapter/user.adapter";
 import { IUserAdapter } from "../../domain/port/user-adapter.interface";
 import { IUser } from "../entity/user.interface";

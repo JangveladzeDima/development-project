@@ -14,7 +14,6 @@ export class CryptoHashController {
     @MessagePattern('get-hash-and-salt-by-text')
     async getHashAndSaltByText(@Payload() text: string) {
         try {
-            console.log("aqvar");
             return this.cryptoHashService.generateHashAndSalt(text)
         } catch (err) {
             this.logger.error(err)

@@ -2,8 +2,6 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { IDesignerAdapter } from "../port/designer-adapter.interface";
 import { DesignerRepository } from "../../infrastructure/database/repository/designer.repository";
 import { IDesignerRepository } from "../../infrastructure/database/port/designer-repository.interface";
-// import { UserAdapter } from "../../../../user/src/domain/adapter/user.adapter";
-// import { IUserAdapter } from "../../../../user/src/domain/port/user-adapter.interface";
 import { IDesigner } from "../../infrastructure/entity/designer.interface";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
@@ -12,10 +10,9 @@ import { DesignerRegistrationDto } from "../../infrastructure/dto/designer-regis
 @Injectable()
 export class DesignerAdapter implements IDesignerAdapter {
     constructor(
-        // @Inject(CryptoHashService) private readonly cryptoHashService: ICryptoHashService,
         @Inject(DesignerRepository) private readonly designerRepository: IDesignerRepository,
-        // @Inject(UserAdapter) private readonly userService: IUserAdapter
-        @Inject('USER_SERVICE') private readonly userService: ClientProxy
+        @Inject('USER_SERVICE') private readonly userService: ClientProxy,
+        @Inject('HASH_SERVICE') private readonly hashService: ClientProxy
     ) {
     }
 
@@ -28,10 +25,12 @@ export class DesignerAdapter implements IDesignerAdapter {
         if (designerByEmail) {
             throw new BadRequestException("User Already Exists");
         }
-        // const {hash, salt} = await this.cryptoHashService.generateHashAndSalt(createDesignerParams.password)
-        // const designer = await this.designerRepository.create({...createDesignerParams, password: hash, salt})
-        const designer = await this.designerRepository.create(createDesignerParams);
-        const user = await firstValueFrom(this.userService.send('create-user', {
+        const {
+            hash,
+            salt
+        } = await firstValueFrom(this.hashService.send('get-hash-and-salt-by-text', createDesignerParams.password))
+        const designer = await this.designerRepository.create({ ...createDesignerParams, password: hash, salt })
+        const user = await firstValueFrom(this.userService.send('user-create', {
             parentID: designer.ID,
             role: "designer",
             email: designer.email
