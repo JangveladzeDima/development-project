@@ -13,11 +13,14 @@ export class UserRepository implements IUserRepository {
     }
 
     async create(userParams) {
+        console.log(userParams)
         return this.userRepository.save(userParams)
     }
 
     async getUser(params: { filter: IUserFilter }) {
-        return this.userRepository.findOneBy(params.filter)
+        return this.userRepository.findOne({
+            where: params.filter
+        })
     }
 
     async updateUser(params: { filter: {}; updateParams: {} }): Promise<void> {

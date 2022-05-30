@@ -22,6 +22,7 @@ let UserAdapter = class UserAdapter {
     }
     async create(createUserParams) {
         if (!available_roles_1.AvailableRoles.includes(createUserParams.role)) {
+            console.log("aqvar");
             throw new common_1.HttpException('role dont correct', common_1.HttpStatus.BAD_REQUEST);
         }
         const userByID = await this.userRepository.getUser({
@@ -29,7 +30,7 @@ let UserAdapter = class UserAdapter {
                 parentID: createUserParams.parentID
             }
         });
-        if (userByID !== null && userByID.role === createUserParams.role) {
+        if (userByID && userByID.role === createUserParams.role) {
             throw new common_1.BadRequestException('user already exists');
         }
         const userByEmail = await this.userRepository.getUser({
@@ -37,18 +38,13 @@ let UserAdapter = class UserAdapter {
                 email: createUserParams.email
             }
         });
-        if (userByEmail !== null && userByEmail.email === createUserParams.email) {
+        if (userByEmail && userByEmail.email === createUserParams.email) {
             throw new common_1.BadRequestException('email already exists');
         }
         return this.userRepository.create(createUserParams);
     }
     async getUser(filter) {
-        const user = await this.userRepository.getUser({
-            filter
-        });
-        if (user === null) {
-            throw new common_1.BadRequestException('user dont exists');
-        }
+        const user = await this.userRepository.getUser({ filter }) || null;
         return user;
     }
 };

@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { DesignerDomainModule } from "../domain/designer-domain.module";
 import { DesignerController } from "./controller/designer.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserEntity } from "./entity/user.entity";
-import { DesignerEntity } from "./entity/designer.entity";
+import { UserEntity } from "./entity/user/user.entity";
+import { DesignerEntity } from "./entity/designer/designer.entity";
 
 
 @Module({

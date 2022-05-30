@@ -1,7 +1,7 @@
-import {Controller, Inject, Logger} from "@nestjs/common";
-import {CryptoHashService} from "../service/crypto-hash.service";
-import {Payload, MessagePattern} from '@nestjs/microservices'
-import {ICryptoHashService} from "../port/crypto-hash-service.interface";
+import { Controller, Inject, Logger } from "@nestjs/common";
+import { CryptoHashService } from "../service/crypto-hash.service";
+import { Payload, MessagePattern } from '@nestjs/microservices'
+import { ICryptoHashService } from "../port/crypto-hash-service.interface";
 
 @Controller('hash')
 export class CryptoHashController {
@@ -21,8 +21,10 @@ export class CryptoHashController {
         }
     }
 
-    async getHashBySalt(@Payload() text: string, salt: string) {
+    @MessagePattern('get-hash-by-salt')
+    async getHashBySalt(@Payload() payload: { text: string, salt: string }) {
         try {
+            const { text, salt } = payload
             return this.cryptoHashService.generateHashBySalt(text, salt)
         } catch (err) {
             this.logger.error(err)

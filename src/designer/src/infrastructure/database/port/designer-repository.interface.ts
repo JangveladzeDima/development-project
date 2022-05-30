@@ -1,4 +1,4 @@
-import {IDesigner} from "../../entity/designer.interface";
+import {IDesigner} from "../../entity/designer/designer.interface";
 
 export interface IDesignerRepository {
     create(designerParams: Partial<IDesigner>): Promise<IDesigner>

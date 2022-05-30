@@ -5,11 +5,13 @@ import { firstValueFrom } from "rxjs";
 import { CompanyRegistrationDto } from "../../dto/company/company-registration.dto";
 import { ICompany } from "../../interface/company/company.model";
 import { ICompanyFilter } from "../../interface/company/company-filter.interface";
+import { ICompanyLogo } from "../../interface/company/company-logo.interface";
 
 @Injectable()
 export class CompanyService implements ICompanyService {
     constructor(
-        @Inject('COMPANY_SERVICE') private readonly companyService: ClientProxy
+        @Inject('COMPANY_SERVICE') private readonly companyService: ClientProxy,
+        @Inject('S3_SERVICE') private readonly s3Service: ClientProxy
     ) {
     }
 
@@ -21,12 +23,27 @@ export class CompanyService implements ICompanyService {
         return company
     }
 
-
     async getCompany(filter: ICompanyFilter): Promise<ICompany> {
-        const company = await firstValueFrom(this.companyService.send('company-get', filter))
+        const company: ICompany = await firstValueFrom(this.companyService.send('company-get', filter))
         if (company.hasOwnProperty('response')) {
             throw new HttpException(company['response']['message'], company['response']['statusCode'])
         }
         return company
+    }
+
+    async addCompanyLogo(fileParams: { file: Express.Multer.File, email: string }): Promise<ICompanyLogo> {
+        const { file, email } = fileParams
+        const logoLocation = await firstValueFrom(this.s3Service.send('add-file', {
+            file,
+            filename: email
+        }))
+        const company: ICompany = await firstValueFrom(this.companyService.send('company-get', {
+            email
+        }))
+        const logo: ICompanyLogo = await firstValueFrom(this.companyService.send('add-company-logo', {
+            companyID: company.ID,
+            logo: logoLocation
+        }))
+        return logo
     }
 }

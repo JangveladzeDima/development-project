@@ -43,7 +43,6 @@ export class CompanyEntity {
         type: 'varchar'
     })
     password: string
-
     @Column({
         type: 'varchar'
     })

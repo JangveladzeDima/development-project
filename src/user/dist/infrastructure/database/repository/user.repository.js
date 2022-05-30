@@ -22,10 +22,13 @@ let UserRepository = class UserRepository {
         this.userRepository = userRepository;
     }
     async create(userParams) {
+        console.log(userParams);
         return this.userRepository.save(userParams);
     }
     async getUser(params) {
-        return this.userRepository.findOneBy(params.filter);
+        return this.userRepository.findOne({
+            where: params.filter
+        });
     }
     async updateUser(params) {
         await this.userRepository.update(params.filter, params.updateParams);

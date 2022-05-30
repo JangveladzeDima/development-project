@@ -1,11 +1,12 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, Inject, Injectable } from "@nestjs/common";
 import { IDesignerAdapter } from "../port/designer-adapter.interface";
 import { DesignerRepository } from "../../infrastructure/database/repository/designer.repository";
 import { IDesignerRepository } from "../../infrastructure/database/port/designer-repository.interface";
-import { IDesigner } from "../../infrastructure/entity/designer.interface";
+import { IDesigner } from "../../infrastructure/entity/designer/designer.interface";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 import { DesignerRegistrationDto } from "../../infrastructure/dto/designer-registration.dto";
+import { IDesignerFilter } from "../../infrastructure/interface/designer-filter.interface";
 
 @Injectable()
 export class DesignerAdapter implements IDesignerAdapter {
@@ -47,5 +48,12 @@ export class DesignerAdapter implements IDesignerAdapter {
             ...designer,
             user: user.ID
         };
+    }
+
+    async get(filter: IDesignerFilter): Promise<IDesigner> {
+        const designer = await this.designerRepository.getDesigner({
+            filter
+        })
+        return designer
     }
 }

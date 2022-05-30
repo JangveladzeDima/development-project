@@ -60,6 +60,12 @@ export class UserController {
     @HttpCode(200)
     async userLogin(@Body() loginParams: LoginUserDto) {
         try {
+            const token = await this.userService.loginUser(loginParams)
+            return {
+                access_token: token,
+                message: 'ok'
+            }
+
         } catch (err) {
             this.logger.error(err.message)
             throw err

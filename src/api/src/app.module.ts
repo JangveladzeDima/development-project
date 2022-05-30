@@ -47,6 +47,39 @@ import { CompanyService } from "./service/company/company.service";
                     }
                 }
             },
+            {
+                name: "JWT_SERVICE",
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://guest:guest@localhost:5672'],
+                    queue: 'jwt_queue',
+                    queueOptions: {
+                        durable: false
+                    }
+                }
+            },
+            {
+                name: "HASH_SERVICE",
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://guest:guest@localhost:5672'],
+                    queue: 'hash_queue',
+                    queueOptions: {
+                        durable: false
+                    }
+                }
+            },
+            {
+                name: 'S3_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://guest:guest@localhost:5672'],
+                    queue: 'aws_queue',
+                    queueOptions: {
+                        durable: false
+                    }
+                }
+            }
         ])
     ],
     controllers: [UserController, DesignerController, CompanyController],

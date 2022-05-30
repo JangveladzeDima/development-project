@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { DesignerEntity } from "../entity/designer.entity";
+import { DesignerEntity } from "../entity/designer/designer.entity";
 import { DesignerRepository } from "./repository/designer.repository";
 import { Repository } from "typeorm";
 

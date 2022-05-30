@@ -22,7 +22,9 @@ src/config.ts
 coverage
 
 
-dist/*
+dist
 src/*/dist/*
 src/api/dist
 src/user/dist
+src/aws/dist
+src/*/node_modules

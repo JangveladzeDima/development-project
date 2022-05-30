@@ -5,6 +5,7 @@ import { IUser } from "../../infrastructure/entity/user.interface";
 import { AvailableRoles } from "../../infrastructure/constants/available-roles";
 import { IUserAdapter } from "../port/user-adapter.interface";
 import { IUserFilter } from "../../infrastructure/interface/user-filter.interface";
+import { create } from "domain";
 
 //
 @Injectable()
@@ -23,6 +24,7 @@ export class UserAdapter implements IUserAdapter {
 //
     async create(createUserParams): Promise<IUser> {
         if (!AvailableRoles.includes(createUserParams.role)) {
+            console.log("aqvar");
             throw new HttpException('role dont correct', HttpStatus.BAD_REQUEST)
         }
         const userByID = await this.userRepository.getUser({
@@ -30,7 +32,7 @@ export class UserAdapter implements IUserAdapter {
                 parentID: createUserParams.parentID
             }
         })
-        if (userByID !== null && userByID.role === createUserParams.role) {
+        if (userByID && userByID.role === createUserParams.role) {
             throw new BadRequestException('user already exists')
         }
         const userByEmail = await this.userRepository.getUser({
@@ -38,7 +40,7 @@ export class UserAdapter implements IUserAdapter {
                 email: createUserParams.email
             }
         })
-        if (userByEmail !== null && userByEmail.email === createUserParams.email) {
+        if (userByEmail && userByEmail.email === createUserParams.email) {
             throw new BadRequestException('email already exists')
         }
         return this.userRepository.create(createUserParams)
@@ -46,12 +48,7 @@ export class UserAdapter implements IUserAdapter {
 
 
     async getUser(filter: IUserFilter): Promise<IUser> {
-        const user = await this.userRepository.getUser({
-            filter
-        })
-        if (user === null) {
-            throw new BadRequestException('user dont exists')
-        }
+        const user = await this.userRepository.getUser({ filter }) || null
         return user
     }
 

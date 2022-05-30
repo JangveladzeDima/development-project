@@ -4,6 +4,7 @@ import { CompanyAdapter } from "../../domain/adapter/company.adapter";
 import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
 import { Payload, Ctx, RmqContext, MessagePattern } from '@nestjs/microservices'
 import { ICompanyFilter } from "../interface/company-filter.interface";
+import { ICompanyLogo } from "../entity/logo/company-logo.model";
 
 @Controller('/company')
 export class CompanyController {
@@ -27,26 +28,18 @@ export class CompanyController {
         }
     }
 
-    // @Post('logo')
-    // @Roles('company')
-    // @UseGuards(JwtAuthGuard)
-    // @UseInterceptors(FileInterceptor('file'))
-    // async addCompanyLogo(
-    //     @Req() req: Request,
-    //     @UploadedFile() file: Express.Multer.File
-    // ) {
-    //     try {
-    //         const email = req.user['email']
-    //         const logo = await this.companyAdapter.addCompanyLogo(file, email)
-    //         return {
-    //             logo,
-    //             message: 'ok'
-    //         }
-    //     } catch (err) {
-    //         this.logger.error(err.message)
-    //         throw err
-    //     }
-    // }
+    @MessagePattern('add-company-logo')
+    async addCompanyLogo(
+        @Payload() logoParams: ICompanyLogo
+    ) {
+        try {
+            const logo = await this.companyAdapter.addCompanyLogo(logoParams)
+            return logo
+        } catch (err) {
+            this.logger.error(err.message)
+            throw err
+        }
+    }
 
     // @Put('/update')
     // @Roles('company')
