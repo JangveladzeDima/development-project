@@ -10,6 +10,8 @@ import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
 import { ICompanyFilter } from "../../infrastructure/interface/company-filter.interface";
 import { ICompanyLogo } from "../../infrastructure/entity/logo/company-logo.model";
+import { ICompanyUpdate } from "../../infrastructure/interface/company-update.interface";
+import { ICompanyLogoFilter } from "../../infrastructure/interface/company-logo-filter.interface";
 
 @Injectable()
 export class CompanyAdapter implements ICompanyAdapter {
@@ -67,83 +69,63 @@ export class CompanyAdapter implements ICompanyAdapter {
     }
 
     async addCompanyLogo(logoParams: ICompanyLogo): Promise<ICompanyLogo> {
-        const logo = await this.companyLogoRepository.add(logoParams)
-        return logo
+        const company = await this.companyRepository.getCompany({
+            filter: {
+                ID: logoParams.companyID
+            }
+        })
+        const oldLogo = await this.companyLogoRepository.getLogo({
+            filter: {
+                companyID: company.ID
+            }
+        })
+        if (oldLogo !== null) {
+            return this.companyLogoRepository.updateLogo({
+                companyID: company.ID
+            }, {
+                logo: logoParams.logo
+            })
+        }
+        return this.companyLogoRepository.add({
+            logo: logoParams.logo,
+            companyID: company.ID
+        })
     }
 
-    // async updateCompany(email, updateParams: CompanyUpdateDto): Promise<{ company: ICompany, access_token: string }> {
-    //     let accessToken;
-    //     if (updateParams.email !== undefined) {
-    //         const user = await this.userRepository.getUser({
-    //             filter: {
-    //                 email: updateParams.email
-    //             }
-    //         })
-    //         if (user !== null) {
-    //             throw new BadRequestException('this email already exists')
-    //         }
-    //         await this.companyRepository.updateCompany({
-    //             filter: {
-    //                 email
-    //             },
-    //             updatedParams: {
-    //                 email: updateParams.email
-    //             }
-    //         })
-    //         await this.userRepository.updateUser({
-    //             filter: {
-    //                 email
-    //             },
-    //             updateParams: {
-    //                 email: updateParams.email
-    //             }
-    //         })
-    //         accessToken = await this.jwtAuthService.login({
-    //             email: updateParams.email,
-    //             role: 'company'
-    //         })
-    //         email = updateParams.email
-    //         updateParams.email = undefined
-    //     }
-    //     if (updateParams.password !== undefined) {
-    //         const {hash, salt} = await this.cryptoHashService.generateHashAndSalt(updateParams.password)
-    //         await this.companyRepository.updateCompany({
-    //             filter: {
-    //                 email,
-    //             },
-    //             updatedParams: {
-    //                 password: hash,
-    //                 salt
-    //             }
-    //         })
-    //         updateParams.password = undefined
-    //     }
-    //     await this.companyRepository.updateCompany({
-    //         filter: {
-    //             email
-    //         },
-    //         updatedParams: {
-    //             ...updateParams
-    //         }
-    //     })
-    //     const company = await this.companyRepository.getCompany({
-    //         filter: {
-    //             email
-    //         }
-    //     })
-    //     let companyLogoProperties = await this.companyLogoRepository.getLogo({
-    //         filter: {
-    //             companyID: company.ID
-    //         }
-    //     })
-    //     if (companyLogoProperties !== null) {
-    //         company.logo = companyLogoProperties.logo
-    //     }
-    //     return {
-    //         company,
-    //         ...accessToken
-    //     }
-    // }
+    async updateCompany(updateParams: { updateCompanyEmail: string; updatedParams: ICompanyUpdate }): Promise<ICompany> {
+        const { updatedParams } = updateParams
+        const company = await this.companyRepository.getCompany({
+            filter: {
+                email: updateParams.updateCompanyEmail
+            }
+        })
+        if (updatedParams.password) {
+            const {
+                hash,
+                salt
+            } = await firstValueFrom(this.hashService.send('get-hash-and-salt-by-text', updatedParams.password))
+
+            updatedParams.salt = salt
+            updatedParams.password = hash
+        }
+        if (updatedParams.logo) {
+            await this.companyLogoRepository.updateLogo({
+                companyID: company.ID
+            }, {
+                logo: updatedParams.logo
+            })
+            delete updatedParams.logo
+        }
+        await this.companyRepository.updateCompany({
+            filter: {
+                email: updateParams.updateCompanyEmail
+            },
+            updatedParams
+        })
+        return this.getCompany({
+            ID: company.ID
+        })
+    }
 
     async getCompany(filter: ICompanyFilter): Promise<ICompany> {
         const company = await this.companyRepository.getCompany({
@@ -163,52 +145,9 @@ export class CompanyAdapter implements ICompanyAdapter {
         return company
     }
 
-    // async getCompany(email: string): Promise<ICompany> {
-    //     const company = await this.companyRepository.getCompany({
-    //         filter: {
-    //             email
-    //         }
-    //     })
-    //     const {logo} = await this.companyLogoRepository.getLogo({
-    //         filter: {
-    //             companyID: company.ID
-    //         }
-    //     })
-    //     company.logo = logo
-    //     return company
-    // }
-
-    // async addCompanyLogo(file: Express.Multer.File, companyEmail): Promise<ICompanyLogo> {
-    //     if (file === undefined) {
-    //         throw new BadRequestException('bad file')
-    //     }
-    //     if (file.mimetype !== 'image/png') {
-    //         throw new BadRequestException('file should by image or png')
-    //     }
-    //     const uploadedFileLocation = await this.s3Service.uploadFile({
-    //         file,
-    //         filename: companyEmail
-    //     })
-    //     const company = await this.companyRepository.getCompany({
-    //         filter: {
-    //             email: companyEmail
-    //         }
-    //     })
-    //     const oldLogo = await this.companyLogoRepository.getLogo({
-    //         filter: {
-    //             companyID: company.ID
-    //         }
-    //     })
-    //     if (oldLogo !== null) {
-    //         return this.companyLogoRepository.updateLogo({
-    //             companyID: company.ID
-    //         }, {
-    //             logo: uploadedFileLocation
-    //         })
-    //     }
-    //     return this.companyLogoRepository.add({
-    //         logo: uploadedFileLocation,
-    //         companyID: company.ID
-    //     })
-    // }
+    async getCompanyLogo(filter: ICompanyLogoFilter): Promise<ICompanyLogo> {
+        return this.companyLogoRepository.getLogo({
+            filter
+        })
+    }
 }

@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from "@nestjs/common";
 console.log(process.env.POSTGRES_HOST)
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: ['log', 'error']
     });
+    app.useGlobalPipes(new ValidationPipe())
     await app.listen(3000);
 }
 

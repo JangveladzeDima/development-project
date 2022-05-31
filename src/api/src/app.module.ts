@@ -7,10 +7,13 @@ import { DesignerController } from "./controller/designer.controller";
 import { DesignerService } from "./service/designer/designer.service";
 import { CompanyController } from "./controller/company.controller";
 import { CompanyService } from "./service/company/company.service";
+import { AuthModule } from "./auth/auth.module";
+import { UpdateInterceptor } from "./interceptor/update.interceptor";
 
 
 @Module({
     imports: [
+        AuthModule,
         ConfigModule.forRoot({
             isGlobal: true
         }),

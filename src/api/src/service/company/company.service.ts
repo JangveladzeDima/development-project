@@ -6,6 +6,7 @@ import { CompanyRegistrationDto } from "../../dto/company/company-registration.d
 import { ICompany } from "../../interface/company/company.model";
 import { ICompanyFilter } from "../../interface/company/company-filter.interface";
 import { ICompanyLogo } from "../../interface/company/company-logo.interface";
+import { ICompanyUpdate } from "../../interface/company/company-update.interface";
 
 @Injectable()
 export class CompanyService implements ICompanyService {
@@ -45,5 +46,27 @@ export class CompanyService implements ICompanyService {
             logo: logoLocation
         }))
         return logo
+    }
+
+    async updateCompany(updateParams: { updateCompanyEmail: string, updatedParams: ICompanyUpdate }): Promise<ICompany> {
+        const { updatedParams } = updateParams
+        let logoLocation;
+        if (updatedParams.logo) {
+            logoLocation = await firstValueFrom(this.s3Service.send('add-file', {
+                file: updatedParams.logo,
+                filename: updateParams.updateCompanyEmail
+            }))
+        }
+        const updatedCompany: ICompany = await firstValueFrom(this.companyService.send('update', {
+            updateCompanyEmail: updateParams.updateCompanyEmail,
+            updatedParams: {
+                ...updatedParams,
+                logo: logoLocation
+            }
+        }))
+        if (updatedCompany.hasOwnProperty('response')) {
+            throw new HttpException(updatedCompany['response']['message'], updatedCompany['response']['statusCode'])
+        }
+        return updatedCompany
     }
 }

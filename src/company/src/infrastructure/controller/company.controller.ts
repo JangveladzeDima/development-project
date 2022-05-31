@@ -5,6 +5,7 @@ import { ICompanyAdapter } from "../../domain/port/company-adapter.interface";
 import { Payload, Ctx, RmqContext, MessagePattern } from '@nestjs/microservices'
 import { ICompanyFilter } from "../interface/company-filter.interface";
 import { ICompanyLogo } from "../entity/logo/company-logo.model";
+import { ICompanyUpdate } from "../interface/company-update.interface";
 
 @Controller('/company')
 export class CompanyController {
@@ -41,25 +42,16 @@ export class CompanyController {
         }
     }
 
-    // @Put('/update')
-    // @Roles('company')
-    // @UseGuards(JwtAuthGuard, RolesGuard)
-    // async updateCompany(
-    //     @Req() req: Request,
-    //     @Body() updateParams: CompanyUpdateDto
-    // ) {
-    //     try {
-    //         const email = req.user['email']
-    //         const updatedCompany = await this.companyAdapter.updateCompany(email, updateParams)
-    //         return {
-    //             ...updatedCompany,
-    //             message: 'ok'
-    //         }
-    //     } catch (err) {
-    //         this.logger.error(err.message)
-    //         throw err
-    //     }
-    // }
+    @MessagePattern('update')
+    async updateCompany(@Payload() updateParams: { updateCompanyEmail: string; updatedParams: ICompanyUpdate }) {
+        try {
+            const updatedCompany = await this.companyAdapter.updateCompany(updateParams)
+            return updatedCompany
+        } catch (err) {
+            this.logger.error(err.message)
+            throw err
+        }
+    }
 
     @Get('/')
     @MessagePattern('company-get')

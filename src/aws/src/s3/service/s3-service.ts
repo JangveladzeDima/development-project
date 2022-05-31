@@ -12,11 +12,33 @@ export class S3Service implements IS3Service {
     })
 
     async uploadFile(fileParams: { file: Express.Multer.File, filename: string }): Promise<string> {
+        const file = await this.getFile(fileParams.filename + '.' + fileParams.file.mimetype.split('/')[1])
+        if (file !== null) {
+            await this.deleteFile(fileParams.file)
+        }
         const uploadedFile = await this.s3.upload({
             Body: Buffer.from(fileParams.file.buffer['data']),
             Bucket: this.Bucket,
-            Key: fileParams.filename+'.'+fileParams.file.mimetype.split('/')[1]
+            Key: fileParams.filename + '.' + fileParams.file.mimetype.split('/')[1]
         }).promise()
         return uploadedFile.Location
+    }
+
+    async getFile(filename) {
+        try {
+            return this.s3.headObject({
+                Bucket: this.Bucket,
+                Key: filename
+            })
+        } catch (err) {
+            return null
+        }
+    }
+
+    async deleteFile(file: Express.Multer.File): Promise<any> {
+        return this.s3.deleteObject({
+            Bucket: this.Bucket,
+            Key: file.filename + '.' + file.mimetype.split('/')[1]
+        })
     }
 }

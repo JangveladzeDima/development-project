@@ -32,5 +32,4 @@ export class UserController {
             return err
         }
     }
-
 }
